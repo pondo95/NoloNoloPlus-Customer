@@ -10,11 +10,11 @@ const Footer = () => {
       <div className={styles.item}>
         <div className={styles.card}>
           <h2 className={styles.motto}>
-            OH YES, WE DID.THE LAMA PIZZA, WELL BAKED SLICE OF PIZZA.
+            Qui ci andrà qualche cosa di presentazione
           </h2>
         </div>
         <div className={styles.card}>
-          <h1 className={styles.title}>FIND OUR RESTAURANTS</h1>
+          <h1 className={styles.title}>FIND OUR SITES</h1>
           <p className={styles.text}>
             1654 R. Don Road #304.
             <br /> NewYork, 85022
