@@ -1,7 +1,22 @@
 import styles from "../styles/ProductList.module.css";
 import ProductCard from "./ProductCard"
 
-const ProductList = () => {
+
+const renderResult = () => {
+  return myData.map((libro, index) => {
+    return (
+        <ProductCard
+          key={libro.id}
+          bookID = {libro.id}
+          title={libro.volumeInfo.title}
+          thumbnail={libro.volumeInfo.imageLinks.thumbnail}
+          description={libro.volumeInfo.description}
+        />
+    );
+  });
+};
+
+function ProductList(){
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>THE BEST NOLO IN TOWN</h1>

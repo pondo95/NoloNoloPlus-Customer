@@ -1,0 +1,11 @@
+.container {
+  background: lightblue;
+  height: 70vh;
+  width: 50%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  padding-left: 30px;
+  padding-right: 30px;
+  justify-content: center;
+}

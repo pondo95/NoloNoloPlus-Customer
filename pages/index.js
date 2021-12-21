@@ -10,7 +10,7 @@ export default function Home() {
     <div className={styles.container}>
       <Head>
         <title>NoloNoloPlus</title>
-        <meta name="description" content="Best pizza shop in town" />
+        <meta name="description" content="Best Nolo shop in town" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Featured/>
