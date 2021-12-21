@@ -11,20 +11,32 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { useState } from "react";
 
 function TopNavbar() {
-  let currentUser = true;
-  let history = useRouter();
+  const [isLogged, setLogged] = useState(false);
+  const router = useRouter();
 
-  const handleLogoutClick = () => {
-    currentUser = false;
-    history("/login");
+  const handleLogoutClick = (e) => {
+    e.preventDefault();
+    setLogged(false);
+    router.push("/login");
+    console.log("sloggato");
   };
+  const handleLoginClick = (e) => {
+    e.preventDefault();
+    setLogged(true);
+    router.push("/");
+    console.log("loggato");
+  };
+
   const authButton = () => {
-    if (currentUser) {
+    if (!isLogged) {
       return (
         <ButtonGroup>
-          <Button variant="secondary">Login</Button>
+          <Button variant="secondary" onClick={handleLoginClick}>
+            Login
+          </Button>
           <Button variant="secondary">Signup</Button>
         </ButtonGroup>
       );
@@ -61,9 +73,7 @@ function TopNavbar() {
           </NavDropdown>
         </Nav>
       </Navbar.Collapse>
-      <Form inline className="mx-3">
-        {authButton()}
-      </Form>
+      <Form className="mx-3">{authButton()}</Form>
     </Navbar>
   );
 }
