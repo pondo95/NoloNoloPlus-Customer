@@ -10,7 +10,6 @@ import {
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useRouter } from "next/router";
-import Link from "next/link";
 import { useState } from "react";
 
 function TopNavbar() {
