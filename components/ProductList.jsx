@@ -4,20 +4,23 @@ import styles from "../styles/ProductList.module.css";
 import ProductCard from "./ProductCard";
 import api from "../scripts/api";
 import Spinner from "./SpinnerLoad";
+import Pagination from "./Pagination";
 
 function ProductList() {
   const [products, setProducts] = useState();
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState();
+  const [paginator, setPaginator] = useState();
   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-  let paginator;
 
   useEffect(() => {
     const fetchData = async () => {
-      paginator = await api.localPagination.fromApi(api.products.get);
-      console.log(paginator.at(1));
+      const x = await api.localPagination.fromApi(api.products.get);
+      setPaginator(x);
       const productData = paginator.at(1);
+      await setCurrentPage(1)
       await setProducts(productData);
-      await delay(5000);
+      await delay(2000);
       setLoading(false);
     };
     fetchData();
@@ -33,9 +36,14 @@ function ProductList() {
           thumbnail={image}
           description={product.description}
         />
+
       );
     });
   };
+
+  const handlePageClick = (n) => {
+    setProducts(paginator.at(n))
+  }
 
   return (
   <div className={styles.container}>
@@ -45,7 +53,17 @@ function ProductList() {
         in pretium molestie. Interdum et malesuada fames acme. Lorem ipsum dolor
         sit amet, consectetur adipiscing elit.
       </p>
-    { loading ? (<Spinner />) : (<div className={styles.wrapper}>{renderResult()}</div>)}
+    { loading ? (<Spinner />) : (
+    <div className={styles.wrapper}>
+      {renderResult()}
+      <Pagination
+                    total={paginator.totalPages}
+                    itemsPerPage={5}
+                    currentPage={currentPage}
+                    handlePageClick={(page) => handlePageClick(page)}
+      />)
+    </div>
+      )}
   </div>
   )
 }
