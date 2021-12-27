@@ -11,32 +11,50 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import * as utility from "../scripts/utils"
+import { useEffect } from "react";
 
 function TopNavbar() {
   const [isLogged, setLogged] = useState(false);
   const router = useRouter();
 
+
+  useEffect(() => {    
+    
+    setLogged(utility.check());
+    console.log(isLogged);
+
+  }, []);
+
+  
+
   const handleLogoutClick = (e) => {
     e.preventDefault();
-    setLogged(false);
+    utility.check();
     router.push("/login");
     console.log("sloggato");
   };
   const handleLoginClick = (e) => {
     e.preventDefault();
-    setLogged(true);
-    router.push("/");
+    utility.check();
+    router.push("/login");
     console.log("loggato");
   };
 
+  const handleSignUpClick = (e) => {
+    e.preventDefault();
+    router.push("/login");
+    console.log("signup");
+  };
+
   const authButton = () => {
-    if (!isLogged) {
+    if (isLogged) {
       return (
         <ButtonGroup>
           <Button variant="secondary" onClick={handleLoginClick}>
             Login
           </Button>
-          <Button variant="secondary">Signup</Button>
+          <Button variant="secondary" onClick={handleSignUpClick}>Signup</Button>
         </ButtonGroup>
       );
     } else {

@@ -1,89 +1,58 @@
-import styles from "../../styles/Product.module.css";
+import React, { useEffect, useState } from "react";
+import api from "../../scripts/api.js";
+import { Row, Col } from "react-bootstrap";
+import { useRouter } from "next/router";
 import Image from "next/image";
-import { useState } from "react";
+import SpinnerLoad from "../../components/SpinnerLoad";
 
-const Product = () => {
-  const [size, setSize] = useState(0);
-  const pizza = {
-    id: 1,
-    img: "/img/pizza.png",
-    name: "CAMPAGNOLA",
-    price: [19.9, 23.9, 27.9],
-    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis arcu purus, rhoncus fringilla vestibulum vel, dignissim vel ante. Nulla facilisi. Nullam a urna sit amet tellus pellentesque egestas in in ante.",
+function Product() {
+  const router = useRouter();
+  const {id} = useRouter().query;
+  const [product, setProduct] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    const fetchProduct = async () => {
+      const x = await api.products.getSingle(router.query.id);
+      setProduct(x.data);
+      console.log(x.data);
+      setLoading(false);
+    };
+    fetchProduct();
+
+  }, [router.isReady]);
+
+
+  const addToCartHandler = (productId) => {};
+
+  const renderProduct = () => {
+    const image = api.toServerImageUrl(product.image);
+
+    return (
+      <div>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <h1>{product.name}</h1>
+        </div>
+
+        <br />
+        <Row gutter={[16, 16]}>
+          <Col lg={12} xs={24}>
+            <img src={image} />
+          </Col>
+          <Col lg={12} xs={24}></Col>
+        </Row>
+      </div>
+    );
   };
 
-  return (
-    <div className={styles.container}>
-      <div className={styles.left}>
-        <div className={styles.imgContainer}>
-          <Image src={pizza.img} objectFit="contain" layout="fill" alt="" />
-        </div>
-      </div>
-      <div className={styles.right}>
-        <h1 className={styles.title}>{pizza.name}</h1>
-        <span className={styles.price}>${pizza.price[size]}</span>
-        <p className={styles.desc}>{pizza.desc}</p>
-        <h3 className={styles.choose}>Choose the size</h3>
-        <div className={styles.sizes}>
-          <div className={styles.size} onClick={() => setSize(0)}>
-            <Image src="/img/size.png" layout="fill" alt="" />
-            <span className={styles.number}>Small</span>
-          </div>
-          <div className={styles.size} onClick={() => setSize(1)}>
-            <Image src="/img/size.png" layout="fill" alt="" />
-            <span className={styles.number}>Medium</span>
-          </div>
-          <div className={styles.size} onClick={() => setSize(2)}>
-            <Image src="/img/size.png" layout="fill" alt="" />
-            <span className={styles.number}>Large</span>
-          </div>
-        </div>
-        <h3 className={styles.choose}>Choose additional ingredients</h3>
-        <div className={styles.ingredients}>
-          <div className={styles.option}>
-            <input
-              type="checkbox"
-              id="double"
-              name="double"
-              className={styles.checkbox}
-            />
-            <label htmlFor="double">Double Ingredients</label>
-          </div>
-          <div className={styles.option}>
-            <input
-              className={styles.checkbox}
-              type="checkbox"
-              id="cheese"
-              name="cheese"
-            />
-            <label htmlFor="cheese">Extra Cheese</label>
-          </div>
-          <div className={styles.option}>
-            <input
-              className={styles.checkbox}
-              type="checkbox"
-              id="spicy"
-              name="spicy"
-            />
-            <label htmlFor="spicy">Spicy Sauce</label>
-          </div>
-          <div className={styles.option}>
-            <input
-              className={styles.checkbox}
-              type="checkbox"
-              id="garlic"
-              name="garlic"
-            />
-            <label htmlFor="garlic">Garlic Sauce</label>
-          </div>
-        </div>
-        <div className={styles.add}>
-            <input type="number" defaultValue={1} className={styles.quantity}/>
-            <button className={styles.button}>Add to Cart</button>
-        </div>
-      </div>
+  return loading ? (
+    <SpinnerLoad />
+  ) : (
+    <div className="productPage" style={{ width: "100%", padding: "3rem 4rem" }}>
+      {renderProduct()}
     </div>
   );
-};
+}
 
 export default Product;

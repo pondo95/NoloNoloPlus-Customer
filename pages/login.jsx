@@ -2,17 +2,28 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import styles from "../styles/Login.module.css";
+import * as utility from "../scripts/utils"
+import { useRouter } from "next/router";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter()
 
   function validateForm() {
     return email.length > 0 && password.length > 0;
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
+    const result = await utility.login(email,password);
+    if (result){
+      router.push("/");
+    }
+    else{
+      alert("Credenziali errate")
+    }
+
   }
 
   return (
