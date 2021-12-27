@@ -11,34 +11,27 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import * as utility from "../scripts/utils"
-import { useEffect } from "react";
+import * as utility from "../scripts/utils";
+import config from "../scripts/config";
 
 function TopNavbar() {
   const [isLogged, setLogged] = useState(false);
   const router = useRouter();
 
-
-  useEffect(() => {    
-    
-    setLogged(utility.check());
-    console.log(isLogged);
-
-  }, []);
-
-  
+  const checkLogged = async () => {
+    setLogged(await utility.check());
+  };
+  checkLogged();
 
   const handleLogoutClick = (e) => {
     e.preventDefault();
-    utility.check();
+    config.setToken("", true);
     router.push("/login");
     console.log("sloggato");
   };
   const handleLoginClick = (e) => {
     e.preventDefault();
-    utility.check();
     router.push("/login");
-    console.log("loggato");
   };
 
   const handleSignUpClick = (e) => {
@@ -48,13 +41,15 @@ function TopNavbar() {
   };
 
   const authButton = () => {
-    if (isLogged) {
+    if (!isLogged) {
       return (
         <ButtonGroup>
           <Button variant="secondary" onClick={handleLoginClick}>
             Login
           </Button>
-          <Button variant="secondary" onClick={handleSignUpClick}>Signup</Button>
+          <Button variant="secondary" onClick={handleSignUpClick}>
+            Signup
+          </Button>
         </ButtonGroup>
       );
     } else {

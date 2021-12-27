@@ -18,7 +18,7 @@ export default function Login() {
     event.preventDefault();
     const result = await utility.login(email,password);
     if (result){
-      router.push("/");
+      router.push('/')
     }
     else{
       alert("Credenziali errate")
