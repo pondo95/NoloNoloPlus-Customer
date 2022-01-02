@@ -1,34 +1,48 @@
 //import Image from "next/image";
-import Image from "react-bootstrap"
 import Link from "next/link";
-import { Card, Button } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import styles from "../styles/ProductCard.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
+/*
+
+*/
+
+/*
+  <div className={styles.card}>
+        <img className={styles.cardImg}src={props.thumbnail} alt="" />
+        <div className={styles.cardBody}>
+          <h2 className={styles.cardH2}>{this.props.title}</h2>
+          <p className={styles.cardP}>
+          {props.description}
+          </p>
+          <h5 className={styles.cardH5}>{props.id}</h5>
+        </div>
+      </div>
+*/ 
+
 function ProductCard(props) {
   console.log(props);
   return (
-    <Card key={props.id} style={{ width: "18rem" }}>
+    <Card key={props.id} className={styles.card}>
       <img src={props.thumbnail} />
-      <Card.Body>
-        <Card.Title>Card Title</Card.Title>
-        <Card.Text>
+      <Card.Body >
+        <Card.Header>Card Title</Card.Header>
+        <Card.Text style={{height:"150px",overflowX : 'auto'}}>
           {props.description}
         </Card.Text>
-        <div>
-          <Link href={`/product/${props.id}`}>
-            <div style={{ background: "black", width: "30%", height: "30%" }}>
-              <FontAwesomeIcon icon={faShoppingCart} size="1x" />
-            </div>
-          </Link>
-          <div>
-            Acquista
-          </div>
-        </div>
       </Card.Body>
-    </Card>
+      <div className={styles.containerBuy}>
+          <Link href={`/product/${props.id}`}>
+              <FontAwesomeIcon icon={faShoppingCart} size="2x" />
+          </Link>
+        </div>
+    </Card>      
+
   );
 }
+
+
 
 export default ProductCard;

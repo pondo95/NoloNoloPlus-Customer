@@ -40,7 +40,9 @@ function Product() {
           <Col lg={12} xs={24}>
             <img src={image} />
           </Col>
-          <Col lg={12} xs={24}></Col>
+          <Col lg={12} xs={24}>
+            
+          </Col>
         </Row>
       </div>
     );

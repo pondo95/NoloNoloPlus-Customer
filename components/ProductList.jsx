@@ -40,8 +40,13 @@ function ProductList() {
   };
 
   const handlePageClick = (n) => {
+    handleCurrentPage(n);
     setProducts(paginator.at(n));
   };
+
+  const handleCurrentPage = (n) => {
+    setCurrentPage(n);
+  }
 
   return (
     <div className={styles.container}>
@@ -54,15 +59,17 @@ function ProductList() {
       {loading ? (
         <Spinner />
       ) : (
-        <div className={styles.wrapper}>
-          {renderResult()}
-          <Pagination
-            total={paginator.totalPages}
-            itemsPerPage={5}
-            currentPage={currentPage}
-            handlePageClick={(page) => handlePageClick(page)}
-          />
-          )
+        <div>
+          <div className={styles.wrapper}>{renderResult()}</div>
+          <div>
+            <Pagination
+              total={paginator.totalPages}
+              itemsPerPage={5}
+              currentPage={currentPage}
+              handleCurrentPage={(page)=> handleCurrentPage(page)}
+              handlePageClick={(page) => handlePageClick(page)}
+            />
+          </div>
         </div>
       )}
     </div>

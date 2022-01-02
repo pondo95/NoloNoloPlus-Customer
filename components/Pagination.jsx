@@ -6,7 +6,8 @@ function PaginationComponent({
     total = 0,
     itemsPerPage = 10,
     currentPage = 1,
-    handlePageClick
+    handlePageClick,
+    handleCurrentPage
   })
   {
     const [totalPages, setTotalPages] = useState(0);
@@ -38,12 +39,12 @@ function PaginationComponent({
     return (
       <Pagination>
         <Pagination.Prev
-          onClick={() => handlePageClick(currentPage - 1)}
+          onClick={() => handlePageClick(handleCurrentPage(currentPage - 1))}
           disabled={currentPage === 1}
         />
         {paginationItems}
         <Pagination.Next
-          onClick={() => handlePageClick(currentPage + 1)}
+          onClick={() => handlePageClick(handleCurrentPage(currentPage + 1))}
           disabled={currentPage === totalPages}
         />
       </Pagination>

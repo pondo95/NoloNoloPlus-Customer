@@ -17,6 +17,7 @@ export default function Login() {
   async function handleSubmit(event) {
     event.preventDefault();
     const result = await utility.login(email,password);
+    console.log(result);
     if (result){
       router.push('/')
     }
