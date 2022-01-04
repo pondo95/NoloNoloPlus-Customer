@@ -4,7 +4,6 @@ import config from "./config";
 export async function check() {
   try {
     const x = await config.loggedIn();
-    console.log(x);
     return x;
   } catch (error) {
     console.log(error);

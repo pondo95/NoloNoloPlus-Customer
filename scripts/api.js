@@ -224,6 +224,12 @@ const api = {
 				method: 'get',
 			});
 		},
+		async getUnits(id, query = {}) {
+			return request({
+				url: `${config.productsApiUrl}/${id}/units?${mapToQueryString(query)}`,
+				method: 'get',
+			});
+		},
 		async getSingle(id, query = {}) {
 			return request({
 				url: `${config.productsApiUrl}/${id}?${mapToQueryString(query)}`,
@@ -251,6 +257,18 @@ const api = {
 				data,
 			});
 		},
+		async available(id, query = {}) {
+			return request({
+				url: `${config.productsApiUrl}/${id}/available?${mapToQueryString(query)}`,
+				method: 'get',
+			});
+		},
+		async priceEstimation(id, query = {}) {
+			return request({
+				url: `${config.productsApiUrl}/${id}/priceEstimation?${mapToQueryString(query)}`,
+				method: 'get',
+			});
+		},
 		async paginatorNext(paginator) { return paginatorNext(paginator, config.productsApiUrl); },
 		async paginatorPrev(paginator) { return paginatorPrev(paginator, config.productsApiUrl); },
 		async paginatorAt(paginator, page) { return paginatorAt(paginator, page, config.productsApiUrl); },
@@ -263,6 +281,12 @@ const api = {
 			return request({
 				url: `${config.unitsApiUrl}?${mapToQueryString(query)}`,
 				method: 'get',
+			});
+		},
+		async deleteSingle(id, query = {}) {
+			return request({
+				url: `${config.unitsApiUrl}/${id}?${mapToQueryString(query)}`,
+				method: 'delete',
 			});
 		},
 		async getSingle(id, query = {}) {
@@ -293,7 +317,9 @@ const api = {
 		async fromApi(getterFunction, params = [], query = {}) {
 			query.limit = 0;
 			const backendPaginator = (await getterFunction(...params, query)).data;
-			return new Paginator(backendPaginator.docs, 6);
+
+			// Non è detto che le api restituiscano sempre un paginator, quindi .docs non è sempre definito
+			return new Paginator(backendPaginator.docs || backendPaginator, 8);
 		},
 
 		from(docs, limit) {
@@ -319,10 +345,10 @@ config.checkToken = async function () {
 	if (!token) return false;
 
 	try {
-		await api.authentication.verify();
-		return true;
+		const user = (await api.authentication.verify()).data;
+		return [true, user];
 	} catch (err) {
-		return false;
+		return [false, null];
 	}
 };
 

@@ -28,9 +28,9 @@ function ProductList() {
   const renderResult = () => {
     return products.map((product) => {
       const image = api.toServerImageUrl(product.image);
-      console.log(product._id);
       return (
         <ProductCard
+          key={product._id}
           id={product._id}
           thumbnail={image}
           description={product.description}
@@ -46,7 +46,7 @@ function ProductList() {
 
   const handleCurrentPage = (n) => {
     setCurrentPage(n);
-  }
+  };
 
   return (
     <div className={styles.container}>
@@ -66,7 +66,7 @@ function ProductList() {
               total={paginator.totalPages}
               itemsPerPage={5}
               currentPage={currentPage}
-              handleCurrentPage={(page)=> handleCurrentPage(page)}
+              handleCurrentPage={(page) => handleCurrentPage(page)}
               handlePageClick={(page) => handlePageClick(page)}
             />
           </div>

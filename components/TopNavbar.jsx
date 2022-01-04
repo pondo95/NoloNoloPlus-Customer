@@ -16,12 +16,10 @@ import * as utility from "../scripts/utils";
 import config from "../scripts/config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import { useEffect } from "react";
 
 function TopNavbar() {
   const [isLogged, setLogged] = useState();
   const router = useRouter();
-  const [userID, setUserID] = useState();
 
   const checkLogged = async () => {
     setLogged(await utility.check());
@@ -45,6 +43,13 @@ function TopNavbar() {
     console.log("signup");
   };
 
+  const handleUserButton = async (e) => {
+    e.preventDefault();
+    const userId = await config.user()
+    router.push(`/auth/user/${userId._id}`);
+
+  }
+
   const authButton = () => {
     if (!isLogged) {
       return (
@@ -59,18 +64,18 @@ function TopNavbar() {
       );
     } else {
       return (
-        <div style={{justifyContent: "space-between", display: "flex" }}>
+        <ButtonGroup style={{justifyContent: "space-between", display: "flex" }}>
               <FontAwesomeIcon
                 icon={faUserCircle}
                 size="2x"
                 title="Prova"
-                onClick={()=>{router.push(`/auth/user/${userID}`)}}
+                onClick={handleUserButton}
                 style={{ marginRight: "3px" }}
               />
           <Button variant="secondary" onClick={handleLogoutClick}>
             Logout
           </Button>
-        </div>
+        </ButtonGroup>
 
       );
     }
