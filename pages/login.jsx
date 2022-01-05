@@ -2,13 +2,24 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import styles from "../styles/Login.module.css";
-import * as utility from "../scripts/utils"
+import * as utility from "../scripts/utils";
 import { useRouter } from "next/router";
+import ToggleButton from "react-bootstrap/ToggleButton";
+import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
+import Checkbox from 'react-bootstrap/FormCheck';
+
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const router = useRouter()
+  const [checked, setChecked] = useState(false);
+  const router = useRouter();
+
+  const handleChecked = () => {
+    setChecked(!checked);
+  }
+
+   
 
   function validateForm() {
     return email.length > 0 && password.length > 0;
@@ -16,15 +27,13 @@ export default function Login() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    const result = await utility.login(email,password);
+    const result = await utility.login(email, password, checked);
     console.log(result);
-    if (result){
-      router.push('/')
+    if (result) {
+      router.push("/");
+    } else {
+      alert("Credenziali errate");
     }
-    else{
-      alert("Credenziali errate")
-    }
-
   }
 
   return (
@@ -48,6 +57,7 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
+        <Form.Check type="checkbox" label="Check me out" onChange={handleChecked}/>
         <Button size="lg" type="submit" disabled={!validateForm()}>
           Login
         </Button>

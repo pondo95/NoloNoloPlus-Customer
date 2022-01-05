@@ -45,10 +45,9 @@ function TopNavbar() {
 
   const handleUserButton = async (e) => {
     e.preventDefault();
-    const userId = await config.user()
+    const userId = await config.user();
     router.push(`/auth/user/${userId._id}`);
-
-  }
+  };
 
   const authButton = () => {
     if (!isLogged) {
@@ -64,19 +63,21 @@ function TopNavbar() {
       );
     } else {
       return (
-        <ButtonGroup style={{justifyContent: "space-between", display: "flex" }}>
-              <FontAwesomeIcon
-                icon={faUserCircle}
-                size="2x"
-                title="Prova"
-                onClick={handleUserButton}
-                style={{ marginRight: "3px" }}
-              />
+        <ButtonGroup
+          style={{ justifyContent: "space-between", display: "flex" }}
+        >
+          <Button variant="secondary" onClick={handleUserButton}>
+            <FontAwesomeIcon
+              icon={faUserCircle}
+              size="2x"
+              title="Prova"              
+              style={{ marginRight: "3px" }}
+            />
+          </Button>
           <Button variant="secondary" onClick={handleLogoutClick}>
             Logout
           </Button>
         </ButtonGroup>
-
       );
     }
   };

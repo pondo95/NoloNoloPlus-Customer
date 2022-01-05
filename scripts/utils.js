@@ -10,14 +10,14 @@ export async function check() {
   }
 }
 
-export async function login(user, pass) {
+export async function login(user, pass, remember) {
   try {
     const credentials = {
       email: user,
       password: pass,
     };
     const res = await api.customers.login(credentials);
-    config.setToken(res.headers.authorization, this.remember);
+    config.setToken(res.headers.authorization, remember);
     return true;
   } catch (error) {
     console.log(error);

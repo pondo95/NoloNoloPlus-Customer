@@ -3,43 +3,46 @@ import { useState, useEffect } from "react";
 import SpinnerLoad from "../../../components/SpinnerLoad";
 import config from "../../../scripts/config";
 import api from "../../../scripts/api";
+import { useRouter } from "next/router";
 
 function userProfile() {
+  const router = useRouter();
   const [loading, setLoading] = useState(true);
-  const [customer, setCustomer] = useState();
-  const [username, setUsername] = useState();
-  const [name, setName] = useState();
-  const [surname, setSurname] = useState();
-  const [password, setPassword] = useState();
-  const [address, setAddress] = useState();
-  const [image, setImage] = useState();
+  const [customer, setCustomer] = useState({});
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [image, setImage] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       const _user = await config.user();
       setCustomer(_user);
-      setUsername(_user.loginInfo.username);
-      setName(_user.firstname)
-      setSurname(_user.lastname)
-      setPassword(_user.loginInfo.password)
-      setAddress(_user.address)
-      setImage(await api.toServerImageUrl(_user.profilePicture))
+      setConfirmPassword(_user.loginInfo.password);
+      setImage(await api.toServerImageUrl(_user.profilePicture));
       setLoading(false);
     };
     fetchData();
     console.log(customer);
-  }, [customer]);
+  }, []);
 
-  const updateCustomer = () => {
-    console.log("Ciao");
+  const updateCustomer = async () => {
+    if (customer.loginInfo.password == confirmPassword) {
+      try {
+        await api.customers.patchSingle(customer._id, customer);
+        alert("Informazioni aggiornate");
+        router.reload();
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      alert("Le password inserite non corrispondono");
+    }
   };
-
 
   return (
     <Container>
       <h3 className="sub-title">Modifica le tue informazioni</h3>
       {!loading ? (
-        <Form onSubmit={updateCustomer}>
+        <Form>
           <Form.Group as={Row} className="mb-3 align-content-center">
             <Form.Label
               htmlFor="avatar"
@@ -60,12 +63,10 @@ function userProfile() {
             </Form.Label>
             <Col sm={10}>
               <Form.Control
+                disabled
                 id="username"
                 type="text"
-                value={username}
-                onChange={(e) =>
-                  setCustomer({ ...customer, username: e.target.value })
-                }
+                value={customer.loginInfo.username}
                 placeholder="Username"
               />
             </Col>
@@ -78,9 +79,12 @@ function userProfile() {
               <Form.Control
                 id="name"
                 type="text"
-                value={name}
+                value={customer.firstname}
                 onChange={(e) =>
-                  setCustomer({ ...customer, name: e.target.value })
+                  setCustomer({
+                    ...customer,
+                    firstname: e.target.value,
+                  })
                 }
                 placeholder="Name"
               />
@@ -94,16 +98,34 @@ function userProfile() {
               <Form.Control
                 id="surname"
                 type="text"
-                value={surname}
+                value={customer.lastname}
                 onChange={(e) =>
-                  setCustomer({ ...customer, surname: e.target.value })
+                  setCustomer({
+                    ...customer,
+                    lastname: e.target.value,
+                  })
                 }
                 placeholder="Surname"
               />
             </Col>
           </Form.Group>
 
-          <Form.Group as={Row} className="mb-3" >
+          <Form.Group as={Row} className="mb-3">
+            <Form.Label htmlFor="email" column sm={2}>
+              Email
+            </Form.Label>
+            <Col sm={10}>
+              <Form.Control
+                id="email"
+                disabled
+                type="text"
+                value={customer.loginInfo.email}
+                placeholder="Email"
+              />
+            </Col>
+          </Form.Group>
+
+          <Form.Group as={Row} className="mb-3">
             <Form.Label htmlFor="password" column sm={2}>
               Password
             </Form.Label>
@@ -111,33 +133,34 @@ function userProfile() {
               <Form.Control
                 id="password"
                 type="password"
-                value={password}
+                value={customer.loginInfo.password}
                 onChange={(e) =>
-                  setCustomer({ ...customer, password: e.target.value })
+                  setCustomer({
+                    ...customer,
+                    loginInfo: {...customer.loginInfo, password: e.target.value }
+                  })
                 }
                 placeholder="Password"
               />
             </Col>
           </Form.Group>
 
-          <Form.Group as={Row} className="mb-3" >
-            <Form.Label htmlFor="password" column sm={2}>
+          <Form.Group as={Row} className="mb-3">
+            <Form.Label htmlFor="confirmPassword" column sm={2}>
               Conferma Password
             </Form.Label>
             <Col sm={10}>
               <Form.Control
-                id="password"
+                id="confirmPassword"
                 type="password"
-                value={password}
-                onChange={(e) =>
-                  setCustomer({ ...customer, password: e.target.value })
-                }
-                placeholder="Password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Confirm Password"
               />
             </Col>
           </Form.Group>
 
-          <Form.Group as={Row} className="mb-3" >
+          <Form.Group as={Row} className="mb-3">
             <Form.Label htmlFor="residence" column sm={2}>
               Nazione
             </Form.Label>
@@ -145,11 +168,11 @@ function userProfile() {
               <Form.Control
                 id="country"
                 type="text"
-                value={address.country}
+                value={customer.address.country}
                 onChange={(e) =>
                   setCustomer({
                     ...customer,
-                    address: { ...customer.address, residence: e.target.value },
+                    address: { ...customer.address, country: e.target.value },
                   })
                 }
                 placeholder="Nazione"
@@ -157,7 +180,7 @@ function userProfile() {
             </Col>
           </Form.Group>
 
-          <Form.Group as={Row} className="mb-3" >
+          <Form.Group as={Row} className="mb-3">
             <Form.Label htmlFor="city" column sm={2}>
               Città
             </Form.Label>
@@ -185,11 +208,11 @@ function userProfile() {
               <Form.Control
                 id="zip"
                 type="text"
-                value={address.zipcode}
+                value={customer.address.zipcode}
                 onChange={(e) =>
                   setCustomer({
                     ...customer,
-                    address: { ...customer.address, zip: e.target.value },
+                    address: { ...customer.address, zipcode: e.target.value },
                   })
                 }
                 placeholder="Codice Postale"
@@ -205,11 +228,14 @@ function userProfile() {
               <Form.Control
                 id="streetAddress"
                 type="text"
-                value={address.streetAddress}
+                value={customer.address.streetAddress}
                 onChange={(e) =>
                   setCustomer({
                     ...customer,
-                    address: { ...customer.address, zip: e.target.value },
+                    address: {
+                      ...customer.address,
+                      streetAddress: e.target.value,
+                    },
                   })
                 }
                 placeholder="Codice Postale"
@@ -219,7 +245,7 @@ function userProfile() {
 
           <Form.Group as={Row} className="mb-3">
             <Col sm={{ span: 10, offset: 2 }}>
-              <Button type="submit">Salva</Button>
+              <Button onClick={updateCustomer}>Salva</Button>
             </Col>
           </Form.Group>
         </Form>

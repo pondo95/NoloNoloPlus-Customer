@@ -26,7 +26,7 @@ const config = {
 	getToken() {
 		try {
 			// diamo priorità al token nel sessionStorage, perché supponiamo essere più aggiornato
-			return sessionStorage.getItem('authToken') || localStorage.getItem('authToken');
+			return window.sessionStorage.getItem('authToken') || window.localStorage.getItem('authToken');
 		} catch (err) {
 			console.error(err);
 			return undefined;
@@ -35,8 +35,8 @@ const config = {
 	setToken(token, remember = true) {
 		try {
 			this._tokenChanged = true;
-			if (remember) localStorage.setItem('authToken', token);
-			else sessionStorage.setItem('authToken', token);
+			if (remember) window.localStorage.setItem('authToken', token);
+			else window.sessionStorage.setItem('authToken', token);
 		} catch (err) {
 			console.error(err);
 		}
