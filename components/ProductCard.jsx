@@ -29,7 +29,7 @@ function ProductCard(props) {
       <img src={props.thumbnail} />
       <Card.Body >
         <Card.Header>Card Title</Card.Header>
-        <Card.Text style={{height:"150px",overflowX : 'auto'}}>
+        <Card.Text className={styles.cardText}>
           {props.description}
         </Card.Text>
       </Card.Body>

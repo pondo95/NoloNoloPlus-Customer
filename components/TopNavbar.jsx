@@ -11,7 +11,7 @@ import {
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import * as utility from "../scripts/utils";
 import config from "../scripts/config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -21,14 +21,14 @@ function TopNavbar() {
   const [isLogged, setLogged] = useState();
   const router = useRouter();
 
-  const checkLogged = async () => {
+  async function checkLogged() {
     setLogged(await utility.check());
   };
   checkLogged();
 
   const handleLogoutClick = (e) => {
     e.preventDefault();
-    config.setToken("", true);
+    config.logout();
     router.push("/login");
     console.log("sloggato");
   };

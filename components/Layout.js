@@ -1,12 +1,14 @@
 import Footer from "./Footer";
 import Navbar from "./TopNavbar";
+import Head from "next/head";
 
-const Layout = ({ children }) => {
+function Layout ({ children })  {
   return (
     <>
-      <Navbar />
-      {children}
-      <Footer />
+    
+        <Navbar />
+        {children}
+        <Footer />
     </>
   );
 };

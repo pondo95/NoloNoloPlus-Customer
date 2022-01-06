@@ -33,6 +33,21 @@
   object-fit: cover;
 }
 
+
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.cardText {
+padding: 10px;
+height: 150px;
+overflow-x: scroll;
+-ms-overflow-style: none;  /* IE and Edge */
+scrollbar-width: none;  /* Firefox */
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.cardText::-webkit-scrollbar {
+  display: none;
+}
+
 .cardH2 {
   color: #222;
   margin-top: -0.2em;

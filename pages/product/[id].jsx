@@ -4,16 +4,13 @@ import { Row, Col, Button } from "react-bootstrap";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import SpinnerLoad from "../../components/SpinnerLoad";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+
 
 function Product() {
   const router = useRouter();
   const id = router.query.id
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [startDate, setStartDate] = useState(new Date());
-  const [fromDate, setFromDate] = useState(new Date());
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -26,7 +23,9 @@ function Product() {
     fetchProduct();
   }, [router.isReady]);
 
-  const addToCartHandler = (productId) => {};
+  const addToCartHandler = () => {
+    router.push(`/auth/orders/${id}`)
+  };
 
   const renderProduct = () => {
     const image = api.toServerImageUrl(product.image);
@@ -42,23 +41,10 @@ function Product() {
           <br />
           <p>{product.description}</p>
           <Row className="buttonRow">
-            <Col>
-            Start
-              <DatePicker
-                selected={startDate}
-                onChange={(date) => setStartDate(date)}
-              />
-              <br/>
-            From
-              <DatePicker
-                selected={fromDate}
-                onChange={(date) => setFromDate(date)}
-              />
-            </Col>
             <Col style={{ textAlign: "right" }}>
               <p>Price: 30$</p>
               <a href={`/auth/orders/${id}`}>
-                <Button id="buy" variant="primary">
+                <Button id="buy" variant="primary" onClick={addToCartHandler}>
                   Buy Now
                 </Button>
               </a>
