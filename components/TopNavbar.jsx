@@ -14,6 +14,7 @@ import * as utility from "../scripts/utils";
 import config from "../scripts/config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle, faFileInvoice } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 function TopNavbar() {
   
