@@ -1,0 +1,48 @@
+# This config is equivalent to both the '.circleci/extended/orb-free.yml' and the base '.circleci/config.yml'
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: cimg/node:lts
+    steps:
+      - checkout
+
+      - add_ssh_keys:
+          fingerprints:
+            - "99:a1:07:44:0a:22:37:45:ac:92:8a:68:3a:32:ef:52" 
+
+      - run:
+          name: Github config
+          command: |
+            git config user.email "denis.pondini@gmail.com"
+            git config user.name "pondo95"
+      - restore_cache:
+          keys:
+            - node-v1-{{ checksum "package-lock.json" }}
+
+      - run:
+          name: Install dependencies
+          command: npm ci
+
+      - run:
+          name: Build SPA file
+          command: npm run export
+
+      - save_cache:
+          key: node-v1-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.npm
+
+      - run: 
+          command: | 
+            ssh-keyscan -H donpasquale.cs.unibo.it >> ~/.ssh/known_hosts
+            scp -r out/* denis.pondini@donpasquale.cs.unibo.it:/home/web/site202120/html/public/frontend/frontoffice
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: main
