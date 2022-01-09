@@ -95,7 +95,7 @@ function TopNavbar() {
       collapseOnSelect
       expand="sm"
       variant="light"
-      className={`mb-3 d-flex justify-content-between ${styles.myNavbar}`}
+      className={`d-flex justify-content-between ${styles.myNavbar}`}
     >
       <Navbar.Brand className="mx-3">
         <a href="/">

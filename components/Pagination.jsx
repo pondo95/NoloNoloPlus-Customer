@@ -39,12 +39,12 @@ function PaginationComponent({
     return (
       <Pagination>
         <Pagination.Prev
-          onClick={() => handlePageClick(handleCurrentPage(currentPage - 1))}
+          onClick={() => handlePageClick(currentPage - 1)}
           disabled={currentPage === 1}
         />
         {paginationItems}
         <Pagination.Next
-          onClick={() => handlePageClick(handleCurrentPage(currentPage + 1))}
+          onClick={() => handlePageClick(currentPage + 1)}
           disabled={currentPage === totalPages}
         />
       </Pagination>

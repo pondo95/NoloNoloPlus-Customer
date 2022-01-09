@@ -9,7 +9,7 @@ function ProductCard(props) {
   console.log(props);
   return (
     <Card key={props.id} className={styles.card}>
-      <img src={props.thumbnail} />
+      <img className={styles.cardImg} src={props.thumbnail} />
       <Card.Body >
         <Card.Header>Card Title</Card.Header>
         <Card.Text className={styles.cardText}>
