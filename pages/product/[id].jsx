@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import api from "../../scripts/api.js";
 import { Row, Col, Button } from "react-bootstrap";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import SpinnerLoad from "../../components/SpinnerLoad";
 
 

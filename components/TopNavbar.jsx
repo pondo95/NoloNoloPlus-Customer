@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React from "react";
 import {
   Navbar,
@@ -100,7 +99,7 @@ function TopNavbar() {
     >
       <Navbar.Brand className="mx-3">
         <Link href="/">
-          <Image src="/img/logo.png" alt="" width="160px" height="69px" />
+          <img src="/img/logo.png" alt="" width="160px" height="69px" />
         </Link>
       </Navbar.Brand>
       <Form className="mx-3">{authButton()}</Form>

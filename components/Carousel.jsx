@@ -1,5 +1,4 @@
 import styles from "../styles/Carousel.module.css";
-import Image from "next/image";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Carousel } from "react-bootstrap";
