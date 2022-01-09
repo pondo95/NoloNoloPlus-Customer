@@ -98,9 +98,9 @@ function TopNavbar() {
       className={`d-flex justify-content-between ${styles.myNavbar}`}
     >
       <Navbar.Brand className="mx-3">
-        <a href="/">
+        <Link href="/">
           <Image src="/img/logo.png" alt="" width="160px" height="69px" />
-        </a>
+        </Link>
       </Navbar.Brand>
       <Form className="mx-3">{authButton()}</Form>
     </Navbar>
