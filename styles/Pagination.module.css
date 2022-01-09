@@ -1,0 +1,19 @@
+.container{
+    justify-content: center;
+}
+
+.paginationItem {
+    
+    border-radius: 5px;
+}
+
+.paginationItem:hover {
+    background-color: #772e2e;
+}
+.paginationItem:active {
+    background-color: #772e2e;
+}
+
+.page-item.active .page-link{
+    background-color: #b90000;
+}
