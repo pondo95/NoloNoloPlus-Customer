@@ -37,7 +37,7 @@ jobs:
       - run: 
           command: | 
             ssh-keyscan -H donpasquale.cs.unibo.it >> ~/.ssh/known_hosts
-            scp -r .next/server/* denis.pondini@donpasquale.cs.unibo.it:/home/web/site202120/html/public/frontend/frontoffice
+            scp -r .next/* denis.pondini@donpasquale.cs.unibo.it:/home/web/site202120/html/public/frontend/frontoffice
 workflows:
   version: 2
   build-deploy:
