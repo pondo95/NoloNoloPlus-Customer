@@ -10,7 +10,7 @@ jobs:
 
       - add_ssh_keys:
           fingerprints:
-            - "0a:f1:27:85:56:44:07:44:50:60:40:8f:1f:73:b5:30" 
+            - "99:a1:07:44:0a:22:37:45:ac:92:8a:68:3a:32:ef:52" 
 
       - run:
           name: Github config
