@@ -1,6 +1,5 @@
 .container {
   height: 50vh;
-  background-color: lightblue;
   overflow: hidden;
   position: relative;
 }
@@ -14,6 +13,7 @@
   margin: auto;
   cursor: pointer;
   z-index: 2;
+  filter: invert(50%);
 }
 
 .wrapper {

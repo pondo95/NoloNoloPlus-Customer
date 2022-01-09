@@ -1,8 +1,9 @@
 import { Container, Form, Col, Row, Image, Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import SpinnerLoad from "../../../components/SpinnerLoad";
-import config from "../../../scripts/config";
-import api from "../../../scripts/api";
+import SpinnerLoad from "../../../../components/SpinnerLoad";
+import config from "../../../../scripts/config";
+import api from "../../../../scripts/api";
+import * as utils from "../../../../scripts/utils";
 import { useRouter } from "next/router";
 
 function userProfile() {
@@ -14,6 +15,7 @@ function userProfile() {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log('qui');
       const _user = await config.user();
       setCustomer(_user);
       setConfirmPassword(_user.loginInfo.password);
@@ -21,7 +23,6 @@ function userProfile() {
       setLoading(false);
     };
     fetchData();
-    console.log(customer);
   }, []);
 
   const updateCustomer = async () => {

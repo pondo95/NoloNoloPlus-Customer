@@ -2,22 +2,21 @@ import Image from "next/image";
 import React from "react";
 import {
   Navbar,
-  Nav,
-  NavDropdown,
   Form,
   Button,
   ButtonGroup,
-  Tooltip,
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
+import styles from "../styles/Navbar.module.css"
 import * as utility from "../scripts/utils";
 import config from "../scripts/config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { faUserCircle, faFileInvoice } from "@fortawesome/free-solid-svg-icons";
 
 function TopNavbar() {
+  
   const [isLogged, setLogged] = useState();
   const router = useRouter();
 
@@ -46,17 +45,18 @@ function TopNavbar() {
   const handleUserButton = async (e) => {
     e.preventDefault();
     const userId = await config.user();
-    router.push(`/auth/user/${userId._id}`);
+    console.log(userId);
+    router.push(`/auth/user/userinfo/${userId._id}`);
   };
 
   const authButton = () => {
     if (!isLogged) {
       return (
         <ButtonGroup>
-          <Button variant="secondary" onClick={handleLoginClick}>
+          <Button className={styles.btn} variant="secondary" onClick={handleLoginClick}>
             Login
           </Button>
-          <Button variant="secondary" onClick={handleSignUpClick}>
+          <Button className={styles.btn} variant="secondary" onClick={handleSignUpClick}>
             Signup
           </Button>
         </ButtonGroup>
@@ -66,15 +66,23 @@ function TopNavbar() {
         <ButtonGroup
           style={{ justifyContent: "space-between", display: "flex" }}
         >
-          <Button variant="secondary" onClick={handleUserButton}>
+          <Button className={styles.btn} variant="secondary" onClick={handleUserButton}>
             <FontAwesomeIcon
               icon={faUserCircle}
               size="2x"
-              title="Prova"              
+              title="Homepage utente"              
               style={{ marginRight: "3px" }}
             />
           </Button>
-          <Button variant="secondary" onClick={handleLogoutClick}>
+          <Button className={styles.btn} variant="secondary" onClick={()=>{router.push(`/auth/user/selection`)}}>
+            <FontAwesomeIcon
+              icon={faFileInvoice}
+              size="2x"
+              title="Homepage utente"              
+              style={{ marginRight: "3px" }}
+            />
+          </Button>
+          <Button className={styles.btn} variant="secondary" onClick={handleLogoutClick}>
             Logout
           </Button>
         </ButtonGroup>
@@ -86,9 +94,8 @@ function TopNavbar() {
     <Navbar
       collapseOnSelect
       expand="sm"
-      bg="light"
       variant="light"
-      className="mb-3 d-flex justify-content-between"
+      className={`mb-3 d-flex justify-content-between ${styles.myNavbar}`}
     >
       <Navbar.Brand className="mx-3">
         <a href="/">

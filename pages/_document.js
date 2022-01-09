@@ -10,7 +10,7 @@ class MyDocument extends Document {
     return (
         <Html lang="it">
         <Head>          
-          <title>NoloNoloPlus</title>
+          
           <meta name="description" content="Best Nolo shop in town" />
           <link rel="icon" href="/favicon.ico" />
         </Head>

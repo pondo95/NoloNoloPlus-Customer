@@ -20,6 +20,7 @@ function Product() {
       console.log(x.data);
       setLoading(false);
     };
+    console.log(id);
     fetchProduct();
   }, [router.isReady]);
 
@@ -42,7 +43,6 @@ function Product() {
           <p>{product.description}</p>
           <Row className="buttonRow">
             <Col style={{ textAlign: "right" }}>
-              <p>Price: 30$</p>
               <a href={`/auth/orders/${id}`}>
                 <Button id="buy" variant="primary" onClick={addToCartHandler}>
                   Buy Now

@@ -1,0 +1,20 @@
+// pages/_middleware.ts
+import * as utils from "../../scripts/utils"
+import api from "../../scripts/api";
+import { NextFetchEvent, NextRequest, NextResponse } from 'next/server'
+
+export async function middleware(req, ev) {
+  console.log(req);  
+  const isLogged = await utils.check();
+  console.log(isLogged);
+  if(!isLogged)
+  {
+    console.log('non loggato');    
+    return NextResponse.redirect('/login')
+  }
+  else
+  {
+    console.log('ok');    
+  }
+
+}

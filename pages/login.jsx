@@ -57,7 +57,7 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
-        <Form.Check type="checkbox" label="Check me out" onChange={handleChecked}/>
+        <Form.Check type="checkbox" label="Resta loggato" onChange={handleChecked}/>
         <Button size="lg" type="submit" disabled={!validateForm()}>
           Login
         </Button>

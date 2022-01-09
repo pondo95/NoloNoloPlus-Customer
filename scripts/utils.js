@@ -3,6 +3,7 @@ import config from "./config";
 
 export async function check() {
   try {
+    console.log(config);
     const x = await config.loggedIn();
     return x;
   } catch (error) {

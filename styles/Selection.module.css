@@ -1,0 +1,8 @@
+.wrapper {
+    width: 100%;
+    display: flex;
+    padding-left: 30px;
+    padding-right: 30px;
+    justify-content:center;
+    flex-wrap: wrap;
+  }

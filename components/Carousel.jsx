@@ -1,8 +1,9 @@
-import styles from "../styles/Featured.module.css";
+import styles from "../styles/Carousel.module.css";
 import Image from "next/image";
 import { useState } from "react";
+import { useEffect } from "react";
 
-const Featured = () => {
+function Carousel () {
   const [index, setIndex] = useState(0);
   const images = [
     "/img/featured.png",
@@ -18,6 +19,13 @@ const Featured = () => {
           setIndex(index !== 2 ? index+1 : 0)
       }
   }
+
+  useEffect(() => {
+    const intervalID = setTimeout(() => {
+      setIndex(index !== 2 ? index+1 : 0)
+    }, 5000);
+    return () => clearInterval(intervalID);
+  }, [index]);
 
   return (
     <div className={styles.container}>
@@ -38,4 +46,4 @@ const Featured = () => {
   );
 };
 
-export default Featured;
+export default Carousel;
