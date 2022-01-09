@@ -20,7 +20,6 @@ function Product() {
       console.log(x.data);
       setLoading(false);
     };
-    console.log(id);
     fetchProduct();
   }, [router.isReady]);
 

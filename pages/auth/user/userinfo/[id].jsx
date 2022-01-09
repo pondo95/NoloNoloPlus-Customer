@@ -6,7 +6,7 @@ import api from "../../../../scripts/api";
 import * as utils from "../../../../scripts/utils";
 import { useRouter } from "next/router";
 
-function userProfile() {
+function UserProfile() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [customer, setCustomer] = useState({});
@@ -257,4 +257,4 @@ function userProfile() {
   );
 }
 
-export default userProfile;
+export default UserProfile;

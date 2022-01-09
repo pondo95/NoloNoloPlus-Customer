@@ -15,7 +15,7 @@ function Carosello() {
   return (
     <Carousel fade >
         {images.map((img, i) => (
-          <Carousel.Item>
+          <Carousel.Item key={index}>
         <img
           className={`d-block w-100 ${styles.imageCarousel}`}
           src={img}
