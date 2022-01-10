@@ -17,7 +17,7 @@ function ProductCard(props) {
         </Card.Text>
       </Card.Body>
       <div className={styles.containerBuy}>
-          <a href={`/product/${props.id}/info`}>
+          <a href={`/product/${props.id}`}>
               <FontAwesomeIcon icon={faShoppingCart} size="2x" />
           </a>
         </div>
