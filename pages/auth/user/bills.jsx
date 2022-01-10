@@ -15,6 +15,6 @@ function Bills() {
     }
   }, []);
 
-  return loading ? <SpinnerLoad /> : <p>Bills</p>;
+  return loading ? <SpinnerLoad /> : <p>Bill</p>;
 }
 export default Bills;
