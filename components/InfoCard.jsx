@@ -2,13 +2,11 @@
 import { Card } from "react-bootstrap";
 import styles from "../styles/InfoCard.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle, faFileInvoice } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
 
 function InfoCard({icon, title, id, path}) {
   console.log(icon);
   const router = useRouter();
-  const iconFinal = faUserCircle;
   return (
     <Card key={id} className={styles.card} onClick={()=>{
       router.push(`/auth/user/${path}`)

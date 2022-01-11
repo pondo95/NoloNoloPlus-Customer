@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import SpinnerLoad from "../../../../components/SpinnerLoad";
 import config from "../../../../scripts/config";
 import api from "../../../../scripts/api";
-import * as utils from "../../../../scripts/utils";
 import { useRouter } from "next/router";
 
 function UserProfile() {

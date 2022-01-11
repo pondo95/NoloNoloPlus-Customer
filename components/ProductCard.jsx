@@ -6,12 +6,12 @@ import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
 
 function ProductCard(props) {
-  console.log(props);
+  //console.log(props);
   return (
     <Card key={props.id} className={styles.card}>
       <img className={styles.cardImg} src={props.thumbnail} />
       <Card.Body >
-        <Card.Header>Card Title</Card.Header>
+        <Card.Header>{props.name}</Card.Header>
         <Card.Text className={styles.cardText}>
           {props.description}
         </Card.Text>

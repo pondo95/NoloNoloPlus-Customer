@@ -5,6 +5,15 @@
   align-items: center;
 }
 
+.DropdownButton-custom{
+  background-color: #222;
+}
+
+.custom{
+  background-color: #222;
+}
+
+
 .desc {
   font-size: 24px;
   color: #444;

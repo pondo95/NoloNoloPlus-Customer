@@ -7,7 +7,7 @@ import {
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import styles from "../styles/Navbar.module.css"
 import * as utility from "../scripts/utils";
 import config from "../scripts/config";
