@@ -3,12 +3,18 @@ import config from "./config";
 
 export async function check() {
   try {
-    console.log(config);
     const x = await config.loggedIn();
     return x;
   } catch (error) {
     console.log(error);
   }
+}
+
+export async function priceEstimation(productId, startDate, endDate) {
+  return api.products.priceEstimation(productId, {
+    from: startDate,
+    to: endDate,
+  });
 }
 
 export async function login(user, pass, remember) {

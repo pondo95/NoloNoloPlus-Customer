@@ -15,23 +15,18 @@ function ProductList() {
   const [currentPage, setCurrentPage] = useState();
   const [paginator, setPaginator] = useState();
   const [searchText, setSearchText] = useState("");
-  const [allProduct, setAllProduct] = useState([]);
   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
   const mainRef = useRef(null);
-  const [isEmpty, setIsEmpty] = useState(true);
-  const [oldAllProduct, setOldAllProduct] = useState([]);
+  const [category, setCategory] = useState([]);
   const [filter, setFilter] = useState("Name");
 
   useEffect(() => {
     const fetchData = async () => {
       const x = await api.localPagination.fromApi(api.products.get);
-      console.log(x);
-      setOldAllProduct(x.nonFilteredDocs);
-      console.log(oldAllProduct);
       setPaginator(x);
       setCurrentPage(1);
       setProducts(x.at(1));
-      setAllProduct(x.nonFilteredDocs);
+      setCategory(Array.from(new Set(x.getAllDocs().map(p => p.category))))
       delay(2000);
       setLoading(false);
     };
@@ -39,44 +34,33 @@ function ProductList() {
   }, []);
 
   useEffect(() => {
-    console.log(searchText);
-    if (searchText != "") {
-      setIsEmpty(false);
-      const results = allProduct.filter((prod) =>
-        prod.name.toLowerCase().includes(searchText)
-      );
-      setAllProduct(results);
-    } else {
-      setIsEmpty(true);
-      console.log(oldAllProduct);
-      setAllProduct(oldAllProduct);
+    if (!loading) {
+      const results = filterProd();
+      paginator.setFiltered(results);
+      setPaginator(paginator);
+      setCurrentPage(1);
+      setProducts(paginator.at(1));
     }
   }, [searchText]);
+
+  function filterProd(){
+    let results = paginator.getAllDocs().filter((prod) =>
+        prod.name.toLowerCase().includes(searchText.toLowerCase())
+      );
+      results = results.filter((prod)=>{
+        return category.includes(prod.category)
+      })
+    return results;
+  }
 
   const handleChangeText = (e) => {
     e.preventDefault();
     console.log(products);
     setSearchText(e.target.value);
-    setAllProduct(oldAllProduct);
   };
 
   const renderResult = () => {
     return products.map((product) => {
-      const image = api.toServerImageUrl(product.image);
-      return (
-        <ProductCard
-          key={product._id}
-          id={product._id}
-          name={product.name}
-          thumbnail={image}
-          description={product.description}
-        />
-      );
-    });
-  };
-
-  const renderFilteredResult = () => {
-    return allProduct.map((product) => {
       const image = api.toServerImageUrl(product.image);
       return (
         <ProductCard
@@ -116,7 +100,7 @@ function ProductList() {
         <div>
           <InputGroup className="mb-3">
             <style type="text/css">
-            {`
+              {`
               .btn-custom {
                 background-color: #222;
                 color: white;
@@ -154,21 +138,16 @@ function ProductList() {
               placeholder="Type here"
             />
           </InputGroup>
-
-          {!isEmpty ? (
-            <div className={styles.wrapper}>{renderFilteredResult()}</div>
-          ) : (
-            <div>
-              <div className={styles.wrapper}>{renderResult()}</div>
-              <Pagination
-                total={paginator.totalPages}
-                itemsPerPage={5}
-                currentPage={currentPage}
-                handleCurrentPage={(page) => handleCurrentPage(page)}
-                handlePageClick={(page) => handlePageClick(page)}
-              />
-            </div>
-          )}
+          <div>
+            <div className={styles.wrapper}>{renderResult()}</div>
+            <Pagination
+              total={paginator.totalPages}
+              itemsPerPage={5}
+              currentPage={currentPage}
+              handleCurrentPage={(page) => handleCurrentPage(page)}
+              handlePageClick={(page) => handlePageClick(page)}
+            />
+          </div>
         </div>
       )}
     </div>

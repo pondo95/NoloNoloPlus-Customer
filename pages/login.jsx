@@ -4,9 +4,6 @@ import Button from "react-bootstrap/Button";
 import styles from "../styles/Login.module.css";
 import * as utility from "../scripts/utils";
 import { useRouter } from "next/router";
-import ToggleButton from "react-bootstrap/ToggleButton";
-import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
-import Checkbox from 'react-bootstrap/FormCheck';
 
 
 export default function Login() {
