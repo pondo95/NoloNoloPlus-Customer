@@ -254,6 +254,7 @@ const api = {
 			return request({
 				url: `${config.productsApiUrl}/${id}?${mapToQueryString(query)}`,
 				method: 'patch',
+				headers: { 'Content-Type': 'multipart/form-data' },
 				data,
 			});
 		},
@@ -289,6 +290,13 @@ const api = {
 				method: 'delete',
 			});
 		},
+		async patchSingle(id, data, query = {}) {
+			return request({
+				url: `${config.unitsApiUrl}/${id}?${mapToQueryString(query)}`,
+				method: 'patch',
+				data,
+			});
+		},
 		async getSingle(id, query = {}) {
 			return request({
 				url: `${config.unitsApiUrl}/${id}?${mapToQueryString(query)}`,
@@ -304,10 +312,92 @@ const api = {
 			});
 		},
 	},
+	bills: {
+		async get(query = { }) {
+			return request({
+				url: `${config.billsApiUrl}?${mapToQueryString(query)}`,
+				method: 'get',
+			});
+		},
+		async deleteSingle(id, query = {}) {
+			return request({
+				url: `${config.billsApiUrl}/${id}?${mapToQueryString(query)}`,
+				method: 'delete',
+			});
+		},
+		async getSingle(id, query = {}) {
+			return request({
+				url: `${config.billsApiUrl}/${id}?${mapToQueryString(query)}`,
+				method: 'get',
+			});
+		},
+		async patchSingle(id, data, query = {}) {
+			return request({
+				url: `${config.billsApiUrl}/${id}?${mapToQueryString(query)}`,
+				method: 'patch',
+				data,
+			});
+		},
+		async post(data) {
+			return request({
+				url: `${config.billsApiUrl}/`,
+				method: 'post',
+				data,
+			});
+		},
+	},
+	offers: {
+		async get(query = { }) {
+			return request({
+				url: `${config.offersApiUrl}?${mapToQueryString(query)}`,
+				method: 'get',
+			});
+		},
+		async deleteSingle(id, query = {}) {
+			return request({
+				url: `${config.offersApiUrl}/${id}?${mapToQueryString(query)}`,
+				method: 'delete',
+			});
+		},
+		async getSingle(id, query = {}) {
+			return request({
+				url: `${config.offersApiUrl}/${id}?${mapToQueryString(query)}`,
+				method: 'get',
+			});
+		},
+		async patchSingle(id, data, query = {}) {
+			return request({
+				url: `${config.offersApiUrl}/${id}?${mapToQueryString(query)}`,
+				method: 'patch',
+				data,
+			});
+		},
+		async post(data) {
+			return request({
+				url: `${config.offersApiUrl}/`,
+				method: 'post',
+				data,
+			});
+		},
+	},
 	authentication: {
 		async verify() {
 			return request({
 				url: `${config.serverApiUrl}/authentication/verify`,
+				method: 'get',
+				timeout: config.loginTimeout,
+			});
+		},
+		async verifyCustomer() {
+			return request({
+				url: `${config.serverApiUrl}/authentication/verifyCustomer`,
+				method: 'get',
+				timeout: config.loginTimeout,
+			});
+		},
+		async verifyEmployee() {
+			return request({
+				url: `${config.serverApiUrl}/authentication/verifyEmployee`,
 				method: 'get',
 				timeout: config.loginTimeout,
 			});
@@ -342,10 +432,38 @@ config.checkToken = async function () {
 	const token = config.getToken();
 	console.log('Checking token:', token);
 
-	if (!token) return false;
+	if (!token) return [false, null];
 
 	try {
 		const user = (await api.authentication.verify()).data;
+		return [true, user];
+	} catch (err) {
+		return [false, null];
+	}
+};
+
+config.checkTokenCustomer = async function () {
+	const token = config.getToken();
+	console.log('Checking token:', token);
+
+	if (!token) return [false, null];
+
+	try {
+		const user = (await api.authentication.verifyCustomer()).data;
+		return [true, user];
+	} catch (err) {
+		return [false, null];
+	}
+};
+
+config.checkTokenEmployee = async function () {
+	const token = config.getToken();
+	console.log('Checking token:', token);
+
+	if (!token) return [false, null];
+
+	try {
+		const user = (await api.authentication.verifyEmployee()).data;
 		return [true, user];
 	} catch (err) {
 		return [false, null];

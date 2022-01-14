@@ -17,6 +17,18 @@ export async function priceEstimation(productId, startDate, endDate) {
   });
 }
 
+export async function createCustomer(customer)
+{
+  try {
+    const res = await api.customers.post(customer);
+    console.log(res);
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
+
 export async function login(user, pass, remember) {
   try {
     const credentials = {

@@ -4,6 +4,7 @@ import SpinnerLoad from "../../../../components/SpinnerLoad";
 import config from "../../../../scripts/config";
 import api from "../../../../scripts/api";
 import { useRouter } from "next/router";
+import * as utils from "../../../../scripts/utils";
 
 function UserProfile() {
   const router = useRouter();
@@ -12,16 +13,19 @@ function UserProfile() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [image, setImage] = useState("");
 
-  useEffect(() => {
+  useEffect(async () => {
     const fetchData = async () => {
-      console.log('qui');
       const _user = await config.user();
       setCustomer(_user);
       setConfirmPassword(_user.loginInfo.password);
       setImage(await api.toServerImageUrl(_user.profilePicture));
       setLoading(false);
     };
-    fetchData();
+    if (await utils.check()) {      
+      fetchData();
+    } else {
+      router.push("/login");
+    }
   }, []);
 
   const updateCustomer = async () => {

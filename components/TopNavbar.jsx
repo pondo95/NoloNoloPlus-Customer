@@ -38,7 +38,7 @@ function TopNavbar() {
 
   const handleSignUpClick = (e) => {
     e.preventDefault();
-    router.push("/login");
+    router.push("/signup");
     console.log("signup");
   };
 

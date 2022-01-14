@@ -1,5 +1,3 @@
-/* eslint-disable no-underscore-dangle */
-
 const config = {
 	serverUrl: 'https://site202120.tw.cs.unibo.it',
 	get serverApiUrl() { return `${this.serverUrl}/api`; }, 			// https://site202120.tw.cs.unibo.it/api    'http://localhost:3000/api'
@@ -9,6 +7,8 @@ const config = {
 	get rentalsApiUrl() { return `${this.serverApiUrl}/rentals`; },
 	get productsApiUrl() { return `${this.serverApiUrl}/products`; },
 	get unitsApiUrl() { return `${this.serverApiUrl}/units`; },
+	get billsApiUrl() { return `${this.serverApiUrl}/bills`; },
+	get offersApiUrl() { return `${this.serverApiUrl}/offers`; },
 	get paginatorLimit() { return 5; },
 	get paginatorLimitRentals() { return 4; },
 	loginTimeout: 5000,
@@ -35,29 +35,64 @@ const config = {
 	setToken(token, remember = true) {
 		try {
 			this._tokenChanged = true;
+			this._tokenChangedCustomer = true;
+			this._tokenChangedEmployee = true;
+
 			if (remember) localStorage.setItem('authToken', token);
 			else sessionStorage.setItem('authToken', token);
 		} catch (err) {
 			console.error(err);
 		}
 	},
+
 	_loggedIn: false,
 	_tokenChanged: true,
 	async loggedIn() {
 		if (this._tokenChanged) {
 			console.log('token changed, checking new token...');
+
 			[this._loggedIn, this._user] = await this.checkToken();
 			this._tokenChanged = false;
 		}
 
-		console.log('Is logged in: ', this._loggedIn);
+		console.log(`Is logged in: ${this._loggedIn}`);
 		return this._loggedIn;
+	},
+
+	_loggedInEmployee: false,
+	_tokenChangedEmployee: true,
+	async loggedInEmployee() {
+		if (this._tokenChangedEmployee) {
+			console.log('token changed, checking new token...');
+
+			[this._loggedInEmployee, this._user] = await this.checkTokenEmployee();
+			this._tokenChangedEmployee = false;
+		}
+
+		console.log(`Is logged in: ${this._loggedInEmployee} as an employee`);
+		return this._loggedInEmployee;
+	},
+
+	_loggedInCustomer: false,
+	_tokenChangedCustomer: true,
+	async loggedInCustomer() {
+		if (this._tokenChangedCustomer) {
+			console.log('token changed, checking new token...');
+
+			[this._loggedInCustomer, this._user] = await this.checkTokenEmployee();
+			this._tokenChangedCustomer = false;
+		}
+
+		console.log(`Is logged in: ${this._loggedInCustomer} as an customer`);
+		return this._loggedInCustomer;
 	},
 	logout() {
 		this.setToken('', false);
 		this.setToken('', true);
 	},
 	async checkToken() { throw new Error('checkToken must be overwritten before use'); },
+	async checkTokenEmployee() { throw new Error('checkToken must be overwritten before use'); },
+	async checkTokenCustomer() { throw new Error('checkToken must be overwritten before use'); },
 };
 
 // TODO toglierelo
