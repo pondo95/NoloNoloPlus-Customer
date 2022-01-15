@@ -35,8 +35,8 @@ function Order() {
       setProduct(x.data);
       console.log(x.data);
       const tempUnit = await api.products.priceEstimation(id, {
-        from: new Date(),
-        to: new Date(),
+        from: new Date().toJSON(),
+        to: new Date().toJSON(),
       })
       setUnit(tempUnit);
       setPrice(tempUnit.data[0].finalPrice);
@@ -65,8 +65,8 @@ function Order() {
     console.log(data);
     setDate([data]);
     const tempUnit = await api.products.priceEstimation(id, {
-      from: data.startDate,
-      to: data.endDate,
+      from: data.startDate.toJSON(),
+      to: data.endDate.toJSON(),
     })
     setUnit(tempUnit);
     setPrice(tempUnit.data[0].finalPrice);
@@ -75,9 +75,9 @@ function Order() {
   const handleConfirm = (e) => {
     e.preventDefault();
     let param = {
-      startDate: date[0].startDate,
-      endDate: date[0].endDate,
-      id: id,
+      startDate: date[0].startDate.toJSON(),
+      endDate: date[0].endDate.toJSON(),
+      prodId: id,
     };
     router.push(`/auth/orders/summary/${JSON.stringify(param)}`);
   };
