@@ -46,7 +46,9 @@ function Summary() {
       const result = await api.rentals.post({
         customer: customer._id,
         unit: unit.data[0].unitID,
-        prenotationDate: param.startDate,
+        priceEstimation: unit.data[0],
+        startDate: param.startDate,
+        prenotationDate: new Date().toJSON(),
         expectedEndDate: param.endDate,
         state: "pending"
       });
