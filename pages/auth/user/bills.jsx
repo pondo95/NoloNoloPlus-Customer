@@ -35,7 +35,7 @@ function Bills() {
     <Container style={{ marginTop: "2rem" }}>
       <ListGroup style={{ marginBottom: "1rem" }}>
         {item.map((bill) => (
-          <ListGroup.Item>
+          <ListGroup.Item ket={bill.id}>
             <Row className={styles.row}>
               <Col>{bill.name}</Col>
               <Col>

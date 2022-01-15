@@ -43,7 +43,7 @@ function OrderList() {
       <tbody>
         {item.map((order) => {
           return (
-            <tr>
+            <tr key={order.id}>
               <td>{order.id}</td>
               <td>{order.name}</td>
               <td>{order.email}</td>
