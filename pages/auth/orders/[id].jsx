@@ -38,6 +38,8 @@ function Order() {
         from: new Date().toJSON(),
         to: new Date().toJSON(),
       })
+      const data = new Date().toJSON()
+      console.log(data);
       setUnit(tempUnit);
       setPrice(tempUnit.data[0].finalPrice);
       setLoading(false);
@@ -64,9 +66,15 @@ function Order() {
     const data = item.selection;
     console.log(data);
     setDate([data]);
+    const stDate = new Date();
+    const eDate = new Date();
+    stDate.setTime(data.startDate.getTime() + (60*60*1000))
+    eDate.setTime(data.endDate.getTime() + (60*60*1000))
     const tempUnit = await api.products.priceEstimation(id, {
-      from: data.startDate.toJSON(),
-      to: data.endDate.toJSON(),
+      from: stDate.toJSON(),
+      //from: data.startDate.getTime() + (60*60*1000).toJSON(),
+      to: eDate.toJSON(),
+      //to: data.endDate.getTime() + (60*60*1000).toJSON()
     })
     setUnit(tempUnit);
     setPrice(tempUnit.data[0].finalPrice);
@@ -74,9 +82,15 @@ function Order() {
 
   const handleConfirm = (e) => {
     e.preventDefault();
+    const stDate = new Date();
+    const eDate = new Date();
+    stDate.setTime(date[0].startDate.getTime() + (60*60*1000))
+    eDate.setTime(date[0].endDate.getTime() + (60*60*1000))
     let param = {
-      startDate: date[0].startDate.toJSON(),
-      endDate: date[0].endDate.toJSON(),
+      //startDate: date[0].startDate.toJSON(),
+      startDate: stDate.toJSON(),
+      //endDate: date[0].endDate.toJSON(),
+      endDate: eDate.toJSON(),
       prodId: id,
     };
     router.push(`/auth/orders/summary/${JSON.stringify(param)}`);
