@@ -1,12 +1,13 @@
 import styles from "../styles/Carousel.module.css";
 import { Carousel } from "react-bootstrap";
+import api from "../scripts/api";
 
 function Carosello() {
   const images = [
-    "../img/yacht.jpeg",
-    "../img/auto.jpeg",
-    "../img/orologi.jpeg",
-    "../img/gioielli.jpeg",
+    api.toServerImageUrl("/image/product/yacht.jpeg"),
+    api.toServerImageUrl("/image/product/auto.jpeg"),
+    api.toServerImageUrl("/image/product/gioielli.jpeg"),
+    api.toServerImageUrl("/image/product/orologi.jpeg"),
   ];
 
   return (
