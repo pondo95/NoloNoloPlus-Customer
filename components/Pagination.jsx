@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import Pagination from "react-bootstrap/Pagination";
+import "../styles/Pagination.module.css"
 import styles from "../styles/Pagination.module.css"
 
 
@@ -25,7 +26,6 @@ function PaginationComponent({
           <Pagination.Item
             key={i}
             active={i === currentPage}
-            className={styles.paginationItem}
             onClick={() => handlePageClick(i)}
           >
             {i}
@@ -39,7 +39,7 @@ function PaginationComponent({
     if (totalPages === 0) return null;
   
     return (
-      <Pagination className={styles.container}>
+      <Pagination className={styles.container} >
         <Pagination.Prev
           onClick={() => handlePageClick(currentPage - 1)}
           disabled={currentPage === 1}

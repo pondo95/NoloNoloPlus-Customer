@@ -1,5 +1,5 @@
 import styles from "../../../styles/Order.module.css";
-import { Row, Col, Button } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import OrderCard from "../../../components/OrderCard";
 import { useRouter } from "next/router";
@@ -38,8 +38,6 @@ function Order() {
         from: new Date().toJSON(),
         to: new Date().toJSON(),
       })
-      const data = new Date().toJSON()
-      console.log(data);
       setUnit(tempUnit);
       setPrice(tempUnit.data[0].finalPrice);
       setLoading(false);
@@ -102,7 +100,7 @@ function Order() {
     <div className={styles.container}>
       <Row xs={1} md={2}>
         <Col md={4}>
-          <div className={styles.left}>
+          <div>
             <OrderCard product={product} />
           </div>
         </Col>
@@ -164,7 +162,7 @@ function Order() {
               </div>
             </Col>
             <Col md={4}>
-              <div className={styles.right}>
+              <div>
                 <div className={styles.wrapper}>
                   <h2 className={styles.title}>CART TOTAL</h2>
                   <div className={styles.totalText}>

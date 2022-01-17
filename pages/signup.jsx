@@ -55,7 +55,7 @@ function SignUp() {
         formData.append("address[city]", customer.address.city);
         formData.append("address[zipcode]", customer.address.zipcode);
         formData.append("address[streetAddress]",customer.address.streetAddress);
-        formData.append("dateOfBirth", new Date());
+        formData.append("dateOfBirth", new Date().toJSON());
         formData.append("profilePicture", image);
         console.log(customer.loginInfo);
         setLoading(true)
@@ -146,13 +146,16 @@ function SignUp() {
             <Col sm={10}>
               <Form.Control
                 id="Birth"
-                type="text"
+                type="date"
+                required
                 value={customer.dateOfBirth}
-                onChange={(e) =>
+                onChange={(e) =>{
+                  const data = new Date(e.target.value).toJSON();
+                  console.log(data);
                   setCustomer({
                     ...customer,
-                    dateOfBirth: new Date(),
-                  })
+                    dateOfBirth: e.target.value,
+                  })}
                 }
                 placeholder="Birth"
               />

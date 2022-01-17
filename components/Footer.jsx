@@ -1,7 +1,7 @@
 
 import styles from "../styles/Footer.module.css";
 
-const Footer = () => {
+function Footer(){
   return (
     <div className={styles.container}>
       <div className={styles.item}>

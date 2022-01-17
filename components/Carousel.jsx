@@ -1,14 +1,12 @@
 import styles from "../styles/Carousel.module.css";
-import { useState } from "react";
-import { useEffect } from "react";
 import { Carousel } from "react-bootstrap";
 
 function Carosello() {
   const images = [
-    "/img/yacht.jpeg",
-    "/img/auto.jpeg",
-    "/img/orologi.jpeg",
-    "/img/gioielli.jpeg",
+    "../img/yacht.jpeg",
+    "../img/auto.jpeg",
+    "../img/orologi.jpeg",
+    "../img/gioielli.jpeg",
   ];
 
   return (
@@ -18,7 +16,7 @@ function Carosello() {
         <img
           className={`d-block w-100 ${styles.imageCarousel}`}
           src={img}
-          alt="First slide"
+          alt="Immagine Carosello"
           />
         <Carousel.Caption>
           <h3>Vogliamo i tuoi soldi</h3>

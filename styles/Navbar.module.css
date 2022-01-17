@@ -6,6 +6,10 @@
   box-shadow: none;  
 }
 
+.logo{
+  cursor: pointer; 
+}
+
 .myNavbar{
   background-color: lightgray;  
 }

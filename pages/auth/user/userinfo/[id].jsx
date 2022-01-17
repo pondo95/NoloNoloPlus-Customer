@@ -165,7 +165,7 @@ function UserProfile() {
           </Form.Group>
 
           <Form.Group as={Row} className="mb-3">
-            <Form.Label htmlFor="residence" column sm={2}>
+            <Form.Label htmlFor="country" column sm={2}>
               Nazione
             </Form.Label>
             <Col sm={10}>

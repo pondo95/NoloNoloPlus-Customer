@@ -1,11 +1,11 @@
 
-.containerBuy{
-  align-self: bottom;
+.containerBuy{ 
   cursor: pointer; 
-  display:"flex";
-  width: "30%";
-  height: "30%";
+  display: flex;
+  justify-content: center;  
+  background-color: #222;
 }
+
 
 .card {
   background: #fff;

@@ -8,7 +8,7 @@ function OrderCard({ product }) {
 
     return (
       <Card key={product._id} className={styles.card}>
-        <img className={styles.cardImg} src={image} />
+        <img className={styles.cardImg} src={image} alt={product.name}/>
         <Card.Body>
           <Card.Header>{product.name}</Card.Header>
           <Card.Text className={styles.cardText}>

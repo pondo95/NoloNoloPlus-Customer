@@ -18,15 +18,16 @@ function ProductList() {
   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
   const mainRef = useRef(null);
   const [category, setCategory] = useState([]);
-  const [filter, setFilter] = useState("Name");
+  const [filter, setFilter] = useState("Tutti");
 
   useEffect(() => {
     const fetchData = async () => {
       const x = await api.localPagination.fromApi(api.products.get);
+      console.log(x);
       setPaginator(x);
       setCurrentPage(1);
       setProducts(x.at(1));
-      setCategory(Array.from(new Set(x.getAllDocs().map(p => p.category))))
+      setCategory(Array.from(new Set(x.getAllDocs().map((p) => p.category))));
       delay(2000);
       setLoading(false);
     };
@@ -43,13 +44,17 @@ function ProductList() {
     }
   }, [searchText]);
 
-  function filterProd(){
-    let results = paginator.getAllDocs().filter((prod) =>
+  function filterProd() {
+    let results = paginator
+      .getAllDocs()
+      .filter((prod) =>
         prod.name.toLowerCase().includes(searchText.toLowerCase())
       );
-      results = results.filter((prod)=>{
-        return category.includes(prod.category)
-      })
+      if(filter!="Tutti")
+    results = results.filter((prod) => {
+      console.log(prod.category,filter);
+      return prod.category==filter;
+    });
     return results;
   }
 
@@ -94,11 +99,7 @@ function ProductList() {
         in pretium molestie. Interdum et malesuada fames acme. Lorem ipsum dolor
         sit amet, consectetur adipiscing elit.
       </p>
-      {loading ? (
-        <Spinner />
-      ) : (
-        <div>
-          <InputGroup className="mb-3">
+      <InputGroup className={styles.inputGroup}>
             <style type="text/css">
               {`
               .btn-custom {
@@ -123,12 +124,16 @@ function ProductList() {
               title={filter}
               id="input-group-dropdown-1"
             >
-              <Dropdown.Item onClick={() => setFilter("Name")}>
-                Name
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => setFilter("Category")}>
-                Category
-              </Dropdown.Item>
+              <Dropdown.Item onClick={()=> setFilter("Tutti")}>
+                    Tutti
+                  </Dropdown.Item>
+              {category.map((cat) => {
+                return (
+                  <Dropdown.Item key={cat}onClick={()=> setFilter(cat)}>
+                    {cat}
+                  </Dropdown.Item>
+                );
+              })}
             </DropdownButton>
             <FormControl
               aria-label="Text input with dropdown button"
@@ -138,6 +143,12 @@ function ProductList() {
               placeholder="Type here"
             />
           </InputGroup>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <div>
+        
+          
           <div>
             <div className={styles.wrapper}>{renderResult()}</div>
             <Pagination
