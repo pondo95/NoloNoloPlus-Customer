@@ -1,5 +1,5 @@
 import styles from "../../../styles/Order.module.css";
-import { Container, ListGroup, Button, Row, Col } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import OrderCard from "../../../components/OrderCard";
 import { useRouter } from "next/router";
@@ -18,9 +18,8 @@ function Order() {
   const id = router.query.id;
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [loading2, setLoading2] = useState(false);
   const [price, setPrice] = useState(0);
-  const [unit, setUnit] = useState([]);
+  const [unit, setUnit] = useState();
   const [date, setDate] = useState([
     {
       startDate: new Date(),
@@ -38,14 +37,13 @@ function Order() {
       const tempUnit = await api.products.priceEstimation(id, {
         from: new Date().toJSON(),
         to: new Date().toJSON(),
-      });
-      console.log(tempUnit);
-      setUnit(tempUnit.data);
+      })
+      setUnit(tempUnit);
       setPrice(tempUnit.data[0].finalPrice);
       setLoading(false);
-      setLoading2(false);
     };
     fetchProduct();
+    
   }, [router.isReady]);
 
   useEffect(async () => {
@@ -68,26 +66,24 @@ function Order() {
     setDate([data]);
     const stDate = new Date();
     const eDate = new Date();
-    stDate.setTime(data.startDate.getTime() + 60 * 60 * 1000);
-    eDate.setTime(data.endDate.getTime() + 60 * 60 * 1000);
-    setLoading2(true);
+    stDate.setTime(data.startDate.getTime() + (60*60*1000))
+    eDate.setTime(data.endDate.getTime() + (60*60*1000))
     const tempUnit = await api.products.priceEstimation(id, {
       from: stDate.toJSON(),
       //from: data.startDate.getTime() + (60*60*1000).toJSON(),
       to: eDate.toJSON(),
       //to: data.endDate.getTime() + (60*60*1000).toJSON()
-    });
-    setUnit(tempUnit.data);
+    })
+    setUnit(tempUnit);
     setPrice(tempUnit.data[0].finalPrice);
-    setLoading2(false);
   };
 
   const handleConfirm = (e) => {
     e.preventDefault();
     const stDate = new Date();
     const eDate = new Date();
-    stDate.setTime(date[0].startDate.getTime() + 60 * 60 * 1000);
-    eDate.setTime(date[0].endDate.getTime() + 60 * 60 * 1000);
+    stDate.setTime(date[0].startDate.getTime() + (60*60*1000))
+    eDate.setTime(date[0].endDate.getTime() + (60*60*1000))
     let param = {
       //startDate: date[0].startDate.toJSON(),
       startDate: stDate.toJSON(),
@@ -102,7 +98,7 @@ function Order() {
     <SpinnerLoad />
   ) : (
     <div className={styles.container}>
-      <Row>
+      <Row xs={1} md={2}>
         <Col md={4}>
           <div>
             <OrderCard product={product} />
@@ -110,15 +106,39 @@ function Order() {
         </Col>
         <Col md={8}>
           <Row>
-            <Col>
-              <div style={{marginTop: "10px"}}>
-                <h1 style={{ display: "flex", justifyContent: "center" }}>
-                  Verifica disponibilità selezionando la data
-                </h1>
-                <div
-                  className={styles.row}
-                  style={{ display: "flex", justifyContent: "center" }}
-                >
+            <Col md={8}>
+              <div className={styles.center}>
+                <div>
+                  <table className={styles.table}>
+                    <tbody>
+                      <tr className={styles.trTitle}>
+                        <th>ID Prodotto</th>
+                        <th>Cliente</th>
+                        <th>Indirizzo</th>
+                        <th>Total</th>
+                      </tr>
+                      <tr className={styles.tr}>
+                        <td>
+                          <span className={styles.id}>{product._id}</span>
+                        </td>
+                        <td>
+                          <span className={styles.name}>
+                            {customer.firstname}
+                          </span>
+                        </td>
+                        <td>
+                          <span className={styles.address}>
+                            Elton st. 212-33 LA
+                          </span>
+                        </td>
+                        <td>
+                          <span className={styles.total}>$79.80</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className={styles.row}>
                   <DateRange
                     editableDateInputs={true}
                     onChange={(item) => handleOnChangeDate(item)}
@@ -141,40 +161,26 @@ function Order() {
                 </div>
               </div>
             </Col>
+            <Col md={4}>
+              <div>
+                <div className={styles.wrapper}>
+                  <h2 className={styles.title}>CART TOTAL</h2>
+                  <div className={styles.totalText}>
+                    <b className={styles.totalTextTitle}>Subtotal:</b>A partire da:{price}
+                  </div>
+                  <div className={styles.totalText}>
+                    <b className={styles.totalTextTitle}>Discount:</b>$0.00
+                  </div>
+                  <div className={styles.totalText}>
+                    <b className={styles.totalTextTitle}>Total:</b>{price}
+                  </div>
+                  <button className={styles.button} onClick={handleConfirm}>
+                    Conferma
+                  </button>
+                </div>
+              </div>
+            </Col>
           </Row>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          {loading2 && unit.length !== 0 ? (
-            <SpinnerLoad />
-          ) : (
-            unit.map((x, index) => (
-              <ListGroup key={index} style={{ marginBottom: "1rem" }}>
-                <ListGroup.Item>
-                  <Row>
-                    <Col>
-                      <h3>Prezzo:</h3>
-                    </Col>
-                    <Col>
-                      <h3>Stato:</h3>
-                    </Col>
-                    <Col>
-                      <h3>Inizio:</h3>
-                    </Col>
-                    <Col>
-                      <h3>Fine:</h3>
-                    </Col>
-                  </Row>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <Row className={styles.row}>
-                    <Col className={styles.col}>{x.finalPrice}€</Col>
-                  </Row>
-                </ListGroup.Item>
-              </ListGroup>
-            ))
-          )}
         </Col>
       </Row>
     </div>

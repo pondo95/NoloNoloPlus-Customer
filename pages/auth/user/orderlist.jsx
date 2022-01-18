@@ -50,25 +50,25 @@ function OrderList() {
     <SpinnerLoad />
   ) : (
     <Container className={styles.container}>
-      <ListGroup style={{ marginBottom: "1rem" }}>
-        <ListGroup.Item>
-          <Row>
-            <Col>
-              <h3>Prezzo:</h3>
-            </Col>
-            <Col>
-              <h3>Stato:</h3>
-            </Col>
-            <Col>
-              <h3>Inizio:</h3>
-            </Col>
-            <Col>
-              <h3>Fine:</h3>
-            </Col>
-          </Row>
-        </ListGroup.Item>
-        {rentals.map((bill) => (
-          <ListGroup.Item key={bill._id}>
+      {rentals.map((bill) => (
+        <ListGroup key={bill._id} style={{ marginBottom: "1rem" }}>
+          <ListGroup.Item>
+            <Row>
+              <Col>
+                <h3>Prezzo:</h3>
+              </Col>
+              <Col>
+                <h3>Stato:</h3>
+              </Col>
+              <Col>
+                <h3>Inizio:</h3>
+              </Col>
+              <Col>
+                <h3>Fine:</h3>
+              </Col>
+            </Row>
+          </ListGroup.Item>
+          <ListGroup.Item>
             <Row className={styles.row}>
               <Col className={styles.col}>
                 {bill.priceEstimation.finalPrice}€
@@ -86,7 +86,14 @@ function OrderList() {
                 <h3>ID: {bill._id}</h3>
               </div>
               <div className={styles.rowButton}>
-                <Button className={styles.btn} variant="secondary" size="md">
+                <Button
+                  className={styles.btn}
+                  variant="secondary"
+                  size="md"
+                  onClick={() =>
+                    router.push(`/auth/user/order/${bill._id}`)
+                  }
+                >
                   VIsualizza Ordine
                 </Button>
                 <Button
@@ -100,8 +107,8 @@ function OrderList() {
               </div>
             </Row>
           </ListGroup.Item>
-        ))}
-      </ListGroup>
+        </ListGroup>
+      ))}
     </Container>
   );
 }

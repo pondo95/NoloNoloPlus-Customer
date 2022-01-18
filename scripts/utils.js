@@ -3,7 +3,7 @@ import config from "./config";
 
 export async function check() {
   try {
-    const x = await config.loggedIn();
+    const x = await config.loggedInCustomer();
     return x;
   } catch (error) {
     console.log(error);
@@ -36,7 +36,8 @@ export async function login(user, pass, remember) {
       password: pass,
     };
     const res = await api.customers.login(credentials);
-    config.setToken(res.headers.authorization, remember);
+    config.setTokenCustomer(res.headers.authorization, remember);
+    console.log('qui');
     return true;
   } catch (error) {
     console.log(error);

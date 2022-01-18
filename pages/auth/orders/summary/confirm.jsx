@@ -14,9 +14,12 @@ function Summary() {
   const [loading, setLoading] = useState(true);
   console.log(param);
 
+
+
+
   useEffect(async () => {
     if (await utils.check()) {
-      setLoading(false);
+      return
     } else {
       router.push("/login");
     }

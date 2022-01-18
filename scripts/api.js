@@ -6,7 +6,7 @@ import Paginator from './pagination';
 
 async function request(params) {
 	const headers = params.headers || { 'Content-Type': 'application/json' };
-	headers.authorization = config.getToken();
+	headers.authorization = config.getTokenCustomer();
 
 	return axios({
 		method: params.method || 'get',
@@ -443,7 +443,7 @@ config.checkToken = async function () {
 };
 
 config.checkTokenCustomer = async function () {
-	const token = config.getToken();
+	const token = config.getTokenCustomer();
 	console.log('Checking token:', token);
 
 	if (!token) return [false, null];
@@ -457,7 +457,7 @@ config.checkTokenCustomer = async function () {
 };
 
 config.checkTokenEmployee = async function () {
-	const token = config.getToken();
+	const token = config.getTokenEmployee();
 	console.log('Checking token:', token);
 
 	if (!token) return [false, null];

@@ -16,7 +16,7 @@ const config = {
 	_user: null,
 	async user() {
 		if (this._user === null) {
-			[this._loggedIn, this._user] = await this.checkToken();
+			[this._loggedIn, this._user] = await this.checkTokenCustomer();
 		}
 
 		return this._user;
@@ -40,6 +40,50 @@ const config = {
 
 			if (remember) localStorage.setItem('authToken', token);
 			else sessionStorage.setItem('authToken', token);
+		} catch (err) {
+			console.error(err);
+		}
+	},
+
+	getTokenCustomer() {
+		try {
+			// diamo priorità al token nel sessionStorage, perché supponiamo essere più aggiornato
+			return sessionStorage.getItem('authTokenCust') || localStorage.getItem('authTokenCust');
+		} catch (err) {
+			console.error(err);
+			return undefined;
+		}
+	},
+	setTokenCustomer(token, remember = true) {
+		try {
+			this._tokenChanged = true;
+			this._tokenChangedCustomer = true;
+			this._tokenChangedEmployee = true;
+
+			if (remember) localStorage.setItem('authTokenCust', token);
+			else sessionStorage.setItem('authTokenCust', token);
+		} catch (err) {
+			console.error(err);
+		}
+	},
+
+	getTokenEmployee() {
+		try {
+			// diamo priorità al token nel sessionStorage, perché supponiamo essere più aggiornato
+			return sessionStorage.getItem('authTokenEmpl') || localStorage.getItem('authTokenEmpl');
+		} catch (err) {
+			console.error(err);
+			return undefined;
+		}
+	},
+	setTokenEmployee(token, remember = true) {
+		try {
+			this._tokenChanged = true;
+			this._tokenChangedCustomer = true;
+			this._tokenChangedEmployee = true;
+
+			if (remember) localStorage.setItem('authTokenEmpl', token);
+			else sessionStorage.setItem('authTokenEmpl', token);
 		} catch (err) {
 			console.error(err);
 		}
@@ -79,7 +123,7 @@ const config = {
 		if (this._tokenChangedCustomer) {
 			console.log('token changed, checking new token...');
 
-			[this._loggedInCustomer, this._user] = await this.checkTokenEmployee();
+			[this._loggedInCustomer, this._user] = await this.checkTokenCustomer();
 			this._tokenChangedCustomer = false;
 		}
 
@@ -89,6 +133,10 @@ const config = {
 	logout() {
 		this.setToken('', false);
 		this.setToken('', true);
+		this.setTokenCustomer('', false);
+		this.setTokenCustomer('', true);
+		this.setTokenEmployee('', false);
+		this.setTokenEmployee('', true);
 	},
 	async checkToken() { throw new Error('checkToken must be overwritten before use'); },
 	async checkTokenEmployee() { throw new Error('checkToken must be overwritten before use'); },

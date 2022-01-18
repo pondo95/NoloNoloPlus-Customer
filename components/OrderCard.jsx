@@ -20,10 +20,7 @@ function OrderCard({ product }) {
   };
 
   return (
-    <div
-      className="productPage"
-      style={{ width: "100%", padding: "3rem 4rem" }}
-    >
+    <div style={{ display: "flex", justifyContent: "center" }}>
       {renderProduct()}
     </div>
   );
