@@ -17,8 +17,7 @@ export async function priceEstimation(productId, startDate, endDate) {
   });
 }
 
-export async function createCustomer(customer)
-{
+export async function createCustomer(customer) {
   try {
     const res = await api.customers.post(customer);
     console.log(res);
@@ -37,10 +36,39 @@ export async function login(user, pass, remember) {
     };
     const res = await api.customers.login(credentials);
     config.setTokenCustomer(res.headers.authorization, remember);
-    console.log('qui');
+    console.log("qui");
     return true;
   } catch (error) {
     console.log(error);
     return false;
   }
+}
+
+export function setOnStorage(item, type) {
+  if (type == "s") {
+    sessionStorage.setItem("startDate", item);
+  } else if (type == "e") {
+    sessionStorage.setItem("endDate", item);
+  } else if (type == "p") {
+    sessionStorage.setItem("prodId", item);
+  } else {
+    console.log("parametri sbagliati");
+  }
+}
+
+export function getOnStorage(type) {
+  if (type == "s") {
+    return sessionStorage.getItem("startDate");
+  } else if (type == "e") {
+    return sessionStorage.getItem("endDate");
+  } else if (type == "p") {
+    return sessionStorage.getItem("prodId");
+  } else {
+    return null;
+  }
+}
+
+export function convertDate(data){
+  let date = new Date(data);
+  return date.toLocaleDateString();
 }

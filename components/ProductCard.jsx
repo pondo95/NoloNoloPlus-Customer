@@ -1,6 +1,5 @@
 //import Image from "next/image";
 import { Card } from "react-bootstrap";
-import Link from "next/link";
 import { Button } from "react-bootstrap";
 import styles from "../styles/ProductCard.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

@@ -82,24 +82,23 @@ function Order() {
     setLoading2(false);
   };
 
-  const handleConfirm = (e) => {
-    e.preventDefault();
+  const handleConfirm = (unitId) => {
+    //e.preventDefault();
     const stDate = new Date();
     const eDate = new Date();
     stDate.setTime(date[0].startDate.getTime() + 60 * 60 * 1000);
     eDate.setTime(date[0].endDate.getTime() + 60 * 60 * 1000);
-    let param = {
-      //startDate: date[0].startDate.toJSON(),
-      startDate: stDate.toJSON(),
-      //endDate: date[0].endDate.toJSON(),
-      endDate: eDate.toJSON(),
-      prodId: id,
-    };
-    router.push(`/auth/orders/summary/confirm?param=${JSON.stringify(param)}`);
+    utils.setOnStorage(stDate.toJSON(), "s");
+    utils.setOnStorage(eDate.toJSON(), "e");
+    utils.setOnStorage(id, "p");
+
+    router.push(`/auth/orders/summary/${unitId}`);
   };
 
   return loading ? (
-    <SpinnerLoad />
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      <SpinnerLoad />
+    </div>
   ) : (
     <div className={styles.container}>
       <Row>
@@ -111,7 +110,7 @@ function Order() {
         <Col md={8}>
           <Row>
             <Col>
-              <div style={{marginTop: "10px"}}>
+              <div style={{ marginTop: "10px" }}>
                 <h1 style={{ display: "flex", justifyContent: "center" }}>
                   Verifica disponibilità selezionando la data
                 </h1>
@@ -154,22 +153,39 @@ function Order() {
                 <ListGroup.Item>
                   <Row>
                     <Col>
-                      <h3>Prezzo:</h3>
+                    <h3>Prezzo base: {x.basePrice}</h3>
                     </Col>
                     <Col>
-                      <h3>Stato:</h3>
-                    </Col>
-                    <Col>
-                      <h3>Inizio:</h3>
-                    </Col>
-                    <Col>
-                      <h3>Fine:</h3>
+                    <h3>Prezzo finale: {x.finalPrice}</h3>
                     </Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>
+                  <Row>
+                    <Col>Questa unità applica i seguenti sconti:</Col>
+                  </Row>
+                  {x.modifiersList.map((mod, index) => {
+                    console.log(mod);
+                    return (
+                      <Row key={mod.modifierID} className={styles.row}>
+                        <Col className={styles.col}>
+                          <b>{index + 1}</b> - {mod.longExplanation}
+                        </Col>
+                      </Row>
+                    );
+                  })}
                   <Row className={styles.row}>
-                    <Col className={styles.col}>{x.finalPrice}€</Col>
+                    <Col style={{display: "flex", justifyContent:"right"}} className={styles.col}>
+                      <Button
+                      className={styles.btn}
+                      variant="secondary"
+                        onClick={() => {
+                          handleConfirm(x.unitID);
+                        }}
+                      >
+                        Seleziona
+                      </Button>
+                    </Col>
                   </Row>
                 </ListGroup.Item>
               </ListGroup>

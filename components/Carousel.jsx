@@ -20,8 +20,8 @@ function Carosello() {
           alt="Immagine Carosello"
           />
         <Carousel.Caption>
-          <h3>Vogliamo i tuoi soldi</h3>
-          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+          <h3>Noleggia da noi</h3>
+          <p>Non rimarrari deluso dalla bellezza e dalla qualità dei nostri prodotti</p>
         </Carousel.Caption>
       </Carousel.Item>
       ))}

@@ -92,12 +92,10 @@ function ProductList() {
   return (
     <div autoFocus className={styles.container}>
       <h1 ref={mainRef} tabIndex="-1" className={styles.title}>
-        THE BEST NOLO IN TOWN
+        Noleggiamo i migliori oggetti di lusso della città
       </h1>
       <p className={styles.desc}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut blandit arcu
-        in pretium molestie. Interdum et malesuada fames acme. Lorem ipsum dolor
-        sit amet, consectetur adipiscing elit.
+        Siamo i migliori nel settore, troverete una vasta gamma di prodotti di lusso per qualsiasi esigenza
       </p>
       <InputGroup className={styles.inputGroup}>
             <style type="text/css">

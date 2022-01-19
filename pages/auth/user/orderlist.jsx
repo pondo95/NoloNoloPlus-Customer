@@ -47,11 +47,16 @@ function OrderList() {
   }, []);
 
   return loading ? (
-    <SpinnerLoad />
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      <SpinnerLoad />
+    </div>
   ) : (
     <Container className={styles.container}>
-      {rentals.map((bill) => (
-        <ListGroup key={bill._id} style={{ marginBottom: "1rem" }}>
+      <h1 style={{ display: "flex", justifyContent: "center" }}>
+        Lista Ordini
+      </h1>
+      {rentals.map((doc) => (
+        <ListGroup key={doc._id} style={{ marginBottom: "1rem" }}>
           <ListGroup.Item>
             <Row>
               <Col>
@@ -71,28 +76,26 @@ function OrderList() {
           <ListGroup.Item>
             <Row className={styles.row}>
               <Col className={styles.col}>
-                {bill.priceEstimation.finalPrice}€
+                {doc.priceEstimation.finalPrice}€
               </Col>
-              <Col className={styles.col}>{bill.state}</Col>
+              <Col className={styles.col}>{doc.state}</Col>
               <Col className={styles.col}>
-                {bill.startDate.substring(0, 10)}
+                {doc.startDate.substring(0, 10)}
               </Col>
               <Col className={styles.col}>
-                {bill.expectedEndDate.substring(0, 10)}
+                {doc.expectedEndDate.substring(0, 10)}
               </Col>
             </Row>
             <Row>
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <h3>ID: {bill._id}</h3>
+                <h3>ID: {doc._id}</h3>
               </div>
               <div className={styles.rowButton}>
                 <Button
                   className={styles.btn}
                   variant="secondary"
                   size="md"
-                  onClick={() =>
-                    router.push(`/auth/user/order/${bill._id}`)
-                  }
+                  onClick={() => router.push(`/auth/user/order/${doc._id}`)}
                 >
                   VIsualizza Ordine
                 </Button>
@@ -100,7 +103,8 @@ function OrderList() {
                   className={styles.btn}
                   variant="secondary"
                   size="md"
-                  disabled={bill.state != "close"}
+                  onClick={() => router.push(`/auth/user/bill/${doc.bill._id}`)}
+                  disabled={doc.state != "close"}
                 >
                   Visualizza Fattura
                 </Button>

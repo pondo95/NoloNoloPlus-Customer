@@ -3,22 +3,28 @@
   background-color: #222;
   display: flex;
 }
+.img {
+  width: 100%;
+  object-fit: cover;
+  aspect-ratio: 16/9;
+}
 
 .item {
   flex: 1;
   position: relative;
   display: flex;
+  max-width: 50%;
 }
 
 .item:last-child {
   flex: 2;
-  padding: 50px;
-  justify-content: space-between;
+  padding: 0 50px;
+  justify-content: center;
 }
 
 .card {
   flex: 1;
-  padding: 0 20px;
+  padding: 20px;
 }
 
 .title {
@@ -39,19 +45,8 @@
     height: auto;
     text-align: center;
   }
-  .item:first-child {
-    display: none;
-  }
-
-  .item {
-    flex-direction: column;
-  }
-
-  .title {
-    font-size: 30px;
-  }
-
-  .text {
-    font-size: 20px;
+  .card {
+    flex: 1;
+    padding: 0px;
   }
 }

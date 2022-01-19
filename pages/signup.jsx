@@ -1,10 +1,10 @@
-import { Container, Form, Col, Row, Image, Button } from "react-bootstrap";
+import { Container, Form, Col, Row, Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import SpinnerLoad from "../components/SpinnerLoad";
-import config from "../scripts/config";
 import * as utils from "../scripts/utils";
 import api from "../scripts/api";
 import { useRouter } from "next/router";
+import styles from "../styles/Login.module.css";
 
 function SignUp() {
   const router = useRouter();
@@ -54,13 +54,16 @@ function SignUp() {
         formData.append("address[country]", customer.address.country);
         formData.append("address[city]", customer.address.city);
         formData.append("address[zipcode]", customer.address.zipcode);
-        formData.append("address[streetAddress]",customer.address.streetAddress);
+        formData.append(
+          "address[streetAddress]",
+          customer.address.streetAddress
+        );
         formData.append("dateOfBirth", new Date().toJSON());
         formData.append("profilePicture", image);
         console.log(customer.loginInfo);
-        setLoading(true)
+        setLoading(true);
         await api.customers.post(formData);
-        setLoading(false)
+        setLoading(false);
         console.log("Richiesta inviata");
         alert("Richiesta inviata");
       } catch (error) {
@@ -149,14 +152,14 @@ function SignUp() {
                 type="date"
                 required
                 value={customer.dateOfBirth}
-                onChange={(e) =>{
+                onChange={(e) => {
                   const data = new Date(e.target.value).toJSON();
                   console.log(data);
                   setCustomer({
                     ...customer,
                     dateOfBirth: e.target.value,
-                  })}
-                }
+                  });
+                }}
                 placeholder="Birth"
               />
             </Col>
@@ -318,14 +321,21 @@ function SignUp() {
 
           <Form.Group as={Row} className="mb-3">
             <Col sm={{ span: 10, offset: 2 }}>
-              <Button type="submit" onClick={createCustomer}>
+              <Button
+                className={styles.btn}
+                variant="secondary"
+                type="submit"
+                onClick={createCustomer}
+              >
                 Salva
               </Button>
             </Col>
           </Form.Group>
         </Form>
       ) : (
-        <SpinnerLoad />
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <SpinnerLoad />
+        </div>
       )}
     </Container>
   );

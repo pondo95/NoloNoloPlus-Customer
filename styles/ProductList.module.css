@@ -44,5 +44,13 @@
     width: 90%;
     text-align: center;
   }  
+  .wrapper {
+    width: 100%;
+    display: flex;
+    padding-left: 0px;
+    padding-right: 0px;
+    justify-content:center;
+    flex-wrap: wrap;
+  }
 
 }

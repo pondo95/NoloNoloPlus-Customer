@@ -7,10 +7,10 @@ import * as utils from "../../../../scripts/utils";
 
 function Order() {
   const router = useRouter();
-  const orderId = router.query.id;
+  const billId = router.query.id;
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState();
-  const [rental, setRental] = useState();
+  const [bill, setBill] = useState();
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -22,13 +22,17 @@ function Order() {
         limit: 0,
         populate: true,
       });
-      console.log(orderId);
-      setRental(
-        _rentals.data.docs.filter((doc) => {
-          return doc._id == orderId;
+      console.log(billId);
+      console.log(_rentals);
+      const _bills = _rentals.data.docs.filter((doc) => {
+        return doc.state == "close";
+      });
+      console.log(_bills);
+      setBill(
+        _bills.filter((doc) => {
+          return doc.bill._id == billId;
         })
       );
-      console.log(_rentals);
       setLoading(false);
     };
     fetchData();
@@ -43,7 +47,7 @@ function Order() {
   }, []);
 
   return loading ? (
-    <div style={{display: "flex", justifyContent: "center"}}>
+    <div style={{ display: "flex", justifyContent: "center" }}>
       <SpinnerLoad />
     </div>
   ) : (
@@ -54,23 +58,25 @@ function Order() {
       >
         <article className="flex flex-col items-end justify-end px-5 lg:px-0 text-center">
           <h1 className="uppercase font-bold text-4xl mt-10">
-            Dettagli dell'ordine
+            Fattura di vendita
           </h1>
-          <p>Ordine: {rental[0]._id}</p>
+          <p>Fattura: {bill[0]._id}</p>
         </article>
         <article className="flex flex-col items-end justify-end px-5 lg:px-0 text-center">
           <h1 className="uppercase font-bold text-4xl mt-10">
-            {rental[0].customer.firstname} {rental[0].customer.lastname}
+            {bill[0].customer.firstname} {bill[0].customer.lastname}
           </h1>
           <p>
-            {rental[0].customer.address.city}-{rental[0].customer.address.streetAddress}
+            {bill[0].customer.address.city}-
+            {bill[0].customer.address.streetAddress}
           </p>
           <p>
-            {rental[0].customer.address.zipcode}-{rental[0].customer.address.country}
+            {bill[0].customer.address.zipcode}-
+            {bill[0].customer.address.country}
           </p>
         </article>
         <article className="flex flex-col items-end px-5 justify-between lg:px-0 mt-10">
-          <p> Data: {utils.convertDate(rental[0].prenotationDate)}</p>
+          <p> Data: {utils.convertDate(bill[0].prenotationDate)}</p>
         </article>
         <section className="mt-10 px-5 lg:px-0">
           <table style={{ width: "100%" }}>
@@ -82,10 +88,10 @@ function Order() {
                 <th>Prezzo finale</th>
               </tr>
               <tr className="text-center">
-                <td>{rental[0].unit.name}</td>
-                <td>{rental[0].priceEstimation.daysCount}</td>
-                <td>{rental[0].priceEstimation.basePrice}</td>
-                <td>{rental[0].priceEstimation.finalPrice}</td>
+                <td>{bill[0].unit.name}</td>
+                <td>{bill[0].priceEstimation.daysCount}</td>
+                <td>{bill[0].priceEstimation.basePrice}</td>
+                <td>{bill[0].priceEstimation.finalPrice}</td>
               </tr>
               <tr>
                 <td>
@@ -93,22 +99,27 @@ function Order() {
                 </td>
               </tr>
               <tr className="text-center">
-                <td>Data inizio Noleggio: {utils.convertDate(rental[0].startDate)}</td>
+                <td>
+                  Data inizio Noleggio: {utils.convertDate(bill[0].startDate)}
+                </td>
               </tr>
               <tr className="text-center">
-                <td>Data fine Noleggio: {utils.convertDate(rental[0].expectedEndDate)}</td>
+                <td>
+                  Data fine Noleggio:{" "}
+                  {utils.convertDate(bill[0].expectedEndDate)}
+                </td>
               </tr>
               <tr>
                 <td>
                   <p></p>
                 </td>
               </tr>
-              {rental[0].priceEstimation.modifiersList.map((mod,index) => {
+              {bill[0].priceEstimation.modifiersList.map((mod, index) => {
                 console.log(mod);
                 return (
                   <tr key={mod.modifierID} className="text-center">
                     <td>
-                    <b>{index+1}</b> - {mod.longExplanation}
+                      <b>{index + 1}</b> - {mod.longExplanation}
                     </td>
                     <td>{mod.daysCount}</td>
                   </tr>
@@ -123,7 +134,10 @@ function Order() {
           </table>
           <article className="flex justify-center mt-10">
             <h3 className="font-bold flex items-right">
-              Total: <span className="text-4xl ml-5">{rental[0].priceEstimation.finalPrice}</span>
+              Total:{" "}
+              <span className="text-4xl ml-5">
+                {bill[0].priceEstimation.finalPrice}
+              </span>
             </h3>
           </article>
         </section>

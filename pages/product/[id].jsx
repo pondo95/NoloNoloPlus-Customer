@@ -3,6 +3,7 @@ import api from "../../scripts/api.js";
 import { Row, Col, Button } from "react-bootstrap";
 import { useRouter } from "next/router";
 import SpinnerLoad from "../../components/SpinnerLoad";
+import styles from "../../styles/ProductPage.module.css"
 
 
 function Product() {
@@ -31,10 +32,10 @@ function Product() {
 
     return (
       <Row className="item">
-        <Col sm={6}>
-          <img style={{ width: "100%" }} src={image} alt="immagine" />
+        <Col md={6}>
+          <img className={styles.img} style={{ width: "100%" }} src={image} alt="immagine" />
         </Col>
-        <Col className="info">
+        <Col md={6} className="info">
           <h2>{product.name}</h2>
           <br />
           <br />
@@ -42,8 +43,8 @@ function Product() {
           <Row className="buttonRow">
             <Col style={{ textAlign: "right" }}>
               <a href={`/auth/orders/${id}`}>
-                <Button id="buy" variant="primary" onClick={addToCartHandler}>
-                  Buy Now
+                <Button className={styles.btn} variant="secondary" onClick={addToCartHandler}>
+                  Procedi
                 </Button>
               </a>
             </Col>
@@ -54,7 +55,9 @@ function Product() {
   };
 
   return loading ? (
-    <SpinnerLoad />
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      <SpinnerLoad />
+    </div>
   ) : (
     <div
       className="productPage"

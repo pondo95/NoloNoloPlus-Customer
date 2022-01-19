@@ -47,7 +47,9 @@ function Selection() {
   };
 
   return loading ? (
-    <SpinnerLoad />
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      <SpinnerLoad />
+    </div>
   ) : (
     <div className={styles.wrapper}>{renderCard()}</div>
   );

@@ -5,6 +5,7 @@ import config from "../../../../scripts/config";
 import api from "../../../../scripts/api";
 import { useRouter } from "next/router";
 import * as utils from "../../../../scripts/utils";
+import styles from "../../../../styles/UserPage.module.css";
 
 function UserProfile() {
   const router = useRouter();
@@ -21,7 +22,7 @@ function UserProfile() {
       setImage(await api.toServerImageUrl(_user.profilePicture));
       setLoading(false);
     };
-    if (await utils.check()) {      
+    if (await utils.check()) {
       fetchData();
     } else {
       router.push("/login");
@@ -141,7 +142,10 @@ function UserProfile() {
                 onChange={(e) =>
                   setCustomer({
                     ...customer,
-                    loginInfo: {...customer.loginInfo, password: e.target.value }
+                    loginInfo: {
+                      ...customer.loginInfo,
+                      password: e.target.value,
+                    },
                   })
                 }
                 placeholder="Password"
@@ -249,12 +253,20 @@ function UserProfile() {
 
           <Form.Group as={Row} className="mb-3">
             <Col sm={{ span: 10, offset: 2 }}>
-              <Button onClick={updateCustomer}>Salva</Button>
+              <Button
+                className={styles.btn}
+                variant="secondary"
+                onClick={updateCustomer}
+              >
+                Salva
+              </Button>
             </Col>
           </Form.Group>
         </Form>
       ) : (
-        <SpinnerLoad />
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <SpinnerLoad />
+        </div>
       )}
     </Container>
   );
