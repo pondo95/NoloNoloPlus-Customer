@@ -20,7 +20,7 @@ function Footer(){
         <div className={styles.card}>
           <h1 className={styles.title}>Orari di apertura</h1>
           <p className={styles.text}>
-            LUNEDI' - VENERDI'
+            LUNEDI&#39; - VENERDI&#39;
             <br /> 9:00 – 22:00
           </p>
           <p className={styles.text}>

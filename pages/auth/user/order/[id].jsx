@@ -54,7 +54,7 @@ function Order() {
       >
         <article className="flex flex-col items-end justify-end px-5 lg:px-0 text-center">
           <h1 className="uppercase font-bold text-4xl mt-10">
-            Dettagli dell'ordine
+            Dettagli dell&#39;ordine
           </h1>
           <p>Ordine: {rental[0]._id}</p>
         </article>
