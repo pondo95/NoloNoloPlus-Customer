@@ -19,10 +19,6 @@ function Carosello() {
           src={img}
           alt="Immagine Carosello"
           />
-        <Carousel.Caption>
-          <h3>Noleggia da noi</h3>
-          <p>Non rimarrari deluso dalla bellezza e dalla qualità dei nostri prodotti</p>
-        </Carousel.Caption>
       </Carousel.Item>
       ))}
     </Carousel>

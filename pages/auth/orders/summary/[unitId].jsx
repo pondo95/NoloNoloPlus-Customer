@@ -62,7 +62,8 @@ function Summary() {
         expectedEndDate: endDate,
         state: "pending",
       });
-      console.log(result);
+      alert("Ordine Creato")
+      router.push(`/auth/user/orderlist`)
     } catch (error) {
       console.log(error);
     }
