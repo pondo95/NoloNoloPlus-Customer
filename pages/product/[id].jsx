@@ -17,7 +17,6 @@ function Product() {
     const fetchProduct = async () => {
       const x = await api.products.getSingle(id);
       setProduct(x.data);
-      console.log(x.data);
       setLoading(false);
     };
     fetchProduct();

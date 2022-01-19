@@ -7,7 +7,6 @@ import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
 
 function ProductCard(props) {
-  //console.log(props);
   const router = useRouter();
 
   const handlePurchase = ()=>{

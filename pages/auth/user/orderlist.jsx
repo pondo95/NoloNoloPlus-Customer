@@ -36,7 +36,6 @@ function OrderList() {
         populate: true,
       });
       setRentals(_rentals.data.docs);
-      console.log(_rentals);
       setLoading(false);
     };
     if (await utils.check()) {

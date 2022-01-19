@@ -23,7 +23,6 @@ function TopNavbar() {
     e.preventDefault();
     config.logout();
     router.push("/login");
-    console.log("sloggato");
   };
   const handleLoginClick = (e) => {
     e.preventDefault();
@@ -33,13 +32,11 @@ function TopNavbar() {
   const handleSignUpClick = (e) => {
     e.preventDefault();
     router.push("/signup");
-    console.log("signup");
   };
 
   const handleUserButton = async (e) => {
     e.preventDefault();
     const userId = await config.user();
-    console.log(userId);
     router.push(`/auth/user/userinfo/${userId._id}`);
   };
 

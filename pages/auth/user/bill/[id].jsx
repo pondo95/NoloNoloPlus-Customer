@@ -22,12 +22,9 @@ function Order() {
         limit: 0,
         populate: true,
       });
-      console.log(billId);
-      console.log(_rentals);
       const _bills = _rentals.data.docs.filter((doc) => {
         return doc.state == "close";
       });
-      console.log(_bills);
       setBill(
         _bills.filter((doc) => {
           return doc.bill._id == billId;
@@ -115,7 +112,6 @@ function Order() {
                 </td>
               </tr>
               {bill[0].priceEstimation.modifiersList.map((mod, index) => {
-                console.log(mod);
                 return (
                   <tr key={mod.modifierID} className="text-center">
                     <td>

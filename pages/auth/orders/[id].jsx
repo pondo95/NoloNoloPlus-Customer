@@ -34,12 +34,10 @@ function Order() {
     const fetchProduct = async () => {
       const x = await api.products.getSingle(id);
       setProduct(x.data);
-      console.log(x.data);
       const tempUnit = await api.products.priceEstimation(id, {
         from: new Date().toJSON(),
         to: new Date().toJSON(),
       });
-      console.log(tempUnit);
       setUnit(tempUnit.data);
       setPrice(tempUnit.data[0].finalPrice);
       setLoading(false);
@@ -50,9 +48,7 @@ function Order() {
 
   useEffect(async () => {
     const fetchData = async () => {
-      console.log("qui");
       const _user = await config.user();
-      console.log(_user);
       setCustomer(_user);
     };
     if (await utils.check()) {
@@ -64,7 +60,6 @@ function Order() {
 
   const handleOnChangeDate = async (item) => {
     const data = item.selection;
-    console.log(data);
     setDate([data]);
     const stDate = new Date();
     const eDate = new Date();
@@ -165,7 +160,6 @@ function Order() {
                     <Col>Questa unità applica i seguenti sconti:</Col>
                   </Row>
                   {x.modifiersList.map((mod, index) => {
-                    console.log(mod);
                     return (
                       <Row key={mod.modifierID} className={styles.row}>
                         <Col className={styles.col}>

@@ -23,7 +23,6 @@ function ProductList() {
   useEffect(() => {
     const fetchData = async () => {
       const x = await api.localPagination.fromApi(api.products.get);
-      console.log(x);
       setPaginator(x);
       setCurrentPage(1);
       setProducts(x.at(1));
@@ -52,7 +51,6 @@ function ProductList() {
       );
       if(filter!="Tutti")
     results = results.filter((prod) => {
-      console.log(prod.category,filter);
       return prod.category==filter;
     });
     return results;
@@ -60,7 +58,6 @@ function ProductList() {
 
   const handleChangeText = (e) => {
     e.preventDefault();
-    console.log(products);
     setSearchText(e.target.value);
   };
 

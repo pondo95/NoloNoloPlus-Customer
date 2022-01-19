@@ -20,7 +20,6 @@ export async function priceEstimation(productId, startDate, endDate) {
 export async function createCustomer(customer) {
   try {
     const res = await api.customers.post(customer);
-    console.log(res);
     return true;
   } catch (error) {
     console.log(error);
@@ -36,7 +35,6 @@ export async function login(user, pass, remember) {
     };
     const res = await api.customers.login(credentials);
     config.setTokenCustomer(res.headers.authorization, remember);
-    console.log("qui");
     return true;
   } catch (error) {
     console.log(error);
@@ -52,7 +50,7 @@ export function setOnStorage(item, type) {
   } else if (type == "p") {
     sessionStorage.setItem("prodId", item);
   } else {
-    console.log("parametri sbagliati");
+    
   }
 }
 

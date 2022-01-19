@@ -31,13 +31,11 @@ function Summary() {
     if (!router.isReady) return;
     const fetchProduct = async () => {
       const prod = await api.products.getSingle(prodId);
-      console.log(prod.data.name);
       setProduct(prod.data);
       const tempUnit = await api.products.priceEstimation(prodId, {
         from: startDate,
         to: endDate,
       });
-      console.log(tempUnit);
       const _user = await config.user();
       setCustomer(_user);
       setUnit(
@@ -117,7 +115,6 @@ function Summary() {
               </tr>
               <tr><td><p></p></td></tr>
               {unit[0].modifiersList.map((mod) => {
-                console.log(mod);
                 return (
                   <tr key={mod.modifierID} className="text-center">
                     <td>

@@ -36,13 +36,10 @@ function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const handlerImage = (e) => {
-    //setImage(e.target.files[0]);
-    console.log(e);
     setImage(e.target.files[0]);
   };
   const createCustomer = async (e) => {
     e.preventDefault();
-    console.log("qui");
     if (customer.loginInfo.password == confirmPassword) {
       try {
         const formData = new FormData();
@@ -60,12 +57,11 @@ function SignUp() {
         );
         formData.append("dateOfBirth", new Date().toJSON());
         formData.append("profilePicture", image);
-        console.log(customer.loginInfo);
         setLoading(true);
         await api.customers.post(formData);
         setLoading(false);
-        console.log("Richiesta inviata");
-        alert("Richiesta inviata");
+        alert("Utente Creato");
+        router.push('/login')
       } catch (error) {
         console.log(error);
       }
@@ -154,7 +150,6 @@ function SignUp() {
                 value={customer.dateOfBirth}
                 onChange={(e) => {
                   const data = new Date(e.target.value).toJSON();
-                  console.log(data);
                   setCustomer({
                     ...customer,
                     dateOfBirth: e.target.value,

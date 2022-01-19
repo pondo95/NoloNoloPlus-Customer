@@ -22,13 +22,11 @@ function Order() {
         limit: 0,
         populate: true,
       });
-      console.log(orderId);
       setRental(
         _rentals.data.docs.filter((doc) => {
           return doc._id == orderId;
         })
       );
-      console.log(_rentals);
       setLoading(false);
     };
     fetchData();
@@ -104,7 +102,6 @@ function Order() {
                 </td>
               </tr>
               {rental[0].priceEstimation.modifiersList.map((mod,index) => {
-                console.log(mod);
                 return (
                   <tr key={mod.modifierID} className="text-center">
                     <td>

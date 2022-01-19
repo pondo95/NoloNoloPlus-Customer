@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
 
 function InfoCard({icon, title, id, path}) {
-  console.log(icon);
   const router = useRouter();
   return (
     <Card key={id} className={styles.card} onClick={()=>{
