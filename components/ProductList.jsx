@@ -41,7 +41,7 @@ function ProductList() {
       setCurrentPage(1);
       setProducts(paginator.at(1));
     }
-  }, [searchText]);
+  }, [searchText,filter]);
 
   function filterProd() {
     let results = paginator
@@ -49,10 +49,10 @@ function ProductList() {
       .filter((prod) =>
         prod.name.toLowerCase().includes(searchText.toLowerCase())
       );
-      if(filter!="Tutti")
-    results = results.filter((prod) => {
-      return prod.category==filter;
-    });
+    if (filter != "Tutti")
+      results = results.filter((prod) => {
+        return prod.category == filter;
+      });
     return results;
   }
 
@@ -92,11 +92,12 @@ function ProductList() {
         Noleggiamo i migliori oggetti di lusso della città
       </h1>
       <p className={styles.desc}>
-        Siamo i migliori nel settore, troverete una vasta gamma di prodotti di lusso per qualsiasi esigenza
+        Siamo i migliori nel settore, troverete una vasta gamma di prodotti di
+        lusso per qualsiasi esigenza
       </p>
       <InputGroup className={styles.inputGroup}>
-            <style type="text/css">
-              {`
+        <style type="text/css">
+          {`
               .btn-custom {
                 background-color: #222;
                 color: white;
@@ -113,37 +114,35 @@ function ProductList() {
                 box-shadow: none;
               }
             `}
-            </style>
-            <DropdownButton
-              variant="custom"
-              title={filter}
-              id="input-group-dropdown-1"
-            >
-              <Dropdown.Item onClick={()=> setFilter("Tutti")}>
-                    Tutti
-                  </Dropdown.Item>
-              {category.map((cat) => {
-                return (
-                  <Dropdown.Item key={cat}onClick={()=> setFilter(cat)}>
-                    {cat}
-                  </Dropdown.Item>
-                );
-              })}
-            </DropdownButton>
-            <FormControl
-              aria-label="Text input with dropdown button"
-              type="text"
-              value={searchText}
-              onChange={handleChangeText}
-              placeholder="Type here"
-            />
-          </InputGroup>
+        </style>
+        <DropdownButton
+          variant="custom"
+          title={filter}
+          id="input-group-dropdown-1"
+        >
+          <Dropdown.Item onClick={() => setFilter("Tutti")}>
+            Tutti
+          </Dropdown.Item>
+          {category.map((cat) => {
+            return (
+              <Dropdown.Item key={cat} onClick={() => setFilter(cat)}>
+                {cat}
+              </Dropdown.Item>
+            );
+          })}
+        </DropdownButton>
+        <FormControl
+          aria-label="Text input with dropdown button"
+          type="text"
+          value={searchText}
+          onChange={handleChangeText}
+          placeholder="Type here"
+        />
+      </InputGroup>
       {loading ? (
         <Spinner />
       ) : (
         <div>
-        
-          
           <div>
             <div className={styles.wrapper}>{renderResult()}</div>
             <Pagination

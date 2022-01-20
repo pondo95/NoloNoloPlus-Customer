@@ -1,5 +1,13 @@
 import styles from "../../../styles/Order.module.css";
-import { Container, ListGroup, Button, Row, Col } from "react-bootstrap";
+import {
+  Container,
+  ListGroup,
+  Button,
+  Row,
+  Col,
+  Accordion,
+  Card,
+} from "react-bootstrap";
 import { useState, useEffect } from "react";
 import OrderCard from "../../../components/OrderCard";
 import { useRouter } from "next/router";
@@ -11,6 +19,7 @@ import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import * as locales from "react-date-range/dist/locale";
 import * as utils from "../../../scripts/utils";
+import Alternative from "../../../components/Alternative";
 
 function Order() {
   const [customer, setCustomer] = useState({});
@@ -19,7 +28,8 @@ function Order() {
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loading2, setLoading2] = useState(false);
-  const [price, setPrice] = useState(0);
+  const [altProduct, setAltProduct] = useState(0);
+  const [altProd, setAltProd] = useState();
   const [unit, setUnit] = useState([]);
   const [date, setDate] = useState([
     {
@@ -38,8 +48,8 @@ function Order() {
         from: new Date().toJSON(),
         to: new Date().toJSON(),
       });
+      setAltProduct(x.data.altproducts);
       setUnit(tempUnit.data);
-      setPrice(tempUnit.data[0].finalPrice);
       setLoading(false);
       setLoading2(false);
     };
@@ -58,6 +68,12 @@ function Order() {
     }
   }, []);
 
+  const renderProduct = () => {
+    return altProduct.map((altProd, index) => {
+      return <Alternative key={index} prodId={altProd} />;
+    });
+  };
+
   const handleOnChangeDate = async (item) => {
     const data = item.selection;
     setDate([data]);
@@ -73,7 +89,6 @@ function Order() {
       //to: data.endDate.getTime() + (60*60*1000).toJSON()
     });
     setUnit(tempUnit.data);
-    setPrice(tempUnit.data[0].finalPrice);
     setLoading2(false);
   };
 
@@ -148,10 +163,10 @@ function Order() {
                 <ListGroup.Item>
                   <Row>
                     <Col>
-                    <h3>Prezzo base: {x.basePrice}</h3>
+                      <h3>Prezzo base: {x.basePrice}</h3>
                     </Col>
                     <Col>
-                    <h3>Prezzo finale: {x.finalPrice}</h3>
+                      <h3>Prezzo finale: {x.finalPrice}</h3>
                     </Col>
                   </Row>
                 </ListGroup.Item>
@@ -169,10 +184,13 @@ function Order() {
                     );
                   })}
                   <Row className={styles.row}>
-                    <Col style={{display: "flex", justifyContent:"right"}} className={styles.col}>
+                    <Col
+                      style={{ display: "flex", justifyContent: "right" }}
+                      className={styles.col}
+                    >
                       <Button
-                      className={styles.btn}
-                      variant="secondary"
+                        className={styles.btn}
+                        variant="secondary"
                         onClick={() => {
                           handleConfirm(x.unitID);
                         }}
@@ -186,6 +204,14 @@ function Order() {
             ))
           )}
         </Col>
+      </Row>
+      <Row>
+        <Col>
+          <h1>Prodotti Alternativi</h1>
+        </Col>
+      </Row>
+      <Row>
+        <Col>{renderProduct()}</Col>
       </Row>
     </div>
   );

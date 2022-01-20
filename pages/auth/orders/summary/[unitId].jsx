@@ -135,7 +135,6 @@ function Summary() {
         </section>
         <div className="p-5 md:w-9/12 md:px-0">
           <h3 className="text-lg">Additional notes:</h3>
-          <p>Note</p>
         </div>
         <section className="mt-10 px-5 lg:px-0">
           <Button className={styles.btn} variant="secondary"onClick={handleConfirm}>Conferma</Button>
